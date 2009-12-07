@@ -1,5 +1,7 @@
 ﻿package view 
 {
+	import com.event.EventZheng;
+	import data.EventConst;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
@@ -36,7 +38,7 @@
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			
+			Main.mainControl.dispatchEvent(new EventZheng(EventConst.EVENT_CLICK_AREA));
 		}
 		public function hoeing():void {
 			field.hoeing();
