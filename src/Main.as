@@ -17,7 +17,7 @@
 		private var topBar:Sprite;
 		private var bottomBar:Sprite;
 		
-		public const var mainControl:MainController;
+		public static var mainControl:MainController;
 		private var mainData:MainData;
 		
 		public function Main():void 

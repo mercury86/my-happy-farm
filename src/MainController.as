@@ -1,5 +1,8 @@
 ﻿package  
 {
+	import com.event.EventZheng;
+	import data.EventConst;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
 	/**
@@ -12,6 +15,14 @@
 		public function MainController(mainData:MainData) 
 		{
 			this.mainData = mainData;
+		}
+		private function addEvent():void {
+			addEventListener(EventConst.EVENT_CLICK_AREA, onAreaClick);
+		}
+		
+		private function onAreaClick(e:EventZheng):void 
+		{
+			//查看当前是什么操作。
 		}
 		
 	}
