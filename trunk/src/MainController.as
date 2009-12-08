@@ -3,28 +3,39 @@
 	import com.event.EventZheng;
 	import data.EventConst;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	
 	/**
-	 * 接收界面元素抛出的事件信息，经过判断后，修改相关数据
+	 * 负责修改数据,界面如果有互动，直接调用该类中的方法
 	 * @author zhengzihua
 	 */
-	public class MainController extends EventDispatcher
+	public class MainController
 	{
 		private var mainData:MainData;
 		public function MainController(mainData:MainData) 
 		{
 			this.mainData = mainData;
 		}
-		private function addEvent():void {
-			addEventListener(EventConst.EVENT_CLICK_AREA, onAreaClick);
-		}
-		
-		private function onAreaClick(e:EventZheng):void 
+		public function onAreaClick():void 
 		{
 			//查看当前是什么操作。
+			var type:String = mainData.operate;
+			switch(type) {
+				case "":
+				
+					break;
+				case "":
+					break;
+			}
 		}
-		
+		public function changeLogin(b:Boolean):void {
+			mainData.login = b;
+		}
+		public function changeIsMyFarm(b:Boolean):void {
+			mainData.isMyFarm = b;
+		}
+		public function changeOperate(str:String):void {
+			mainData.operate = str;
+		}
 	}
 	
 }

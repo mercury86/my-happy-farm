@@ -1,17 +1,18 @@
 ﻿package view 
 {
-	import flash.display.Sprite;
+	import flash.display.MovieClip;
 	
 	/**
 	 * ...
 	 * @author zhengzihua
 	 */
-	public class BottomBar extends Sprite
+	public class BottomBar extends MovieClip
 	{
 		
-		public function BottomBar() 
+		public function BottomBar(cx:int,cy:int) 
 		{
-			
+			x = cx;
+			y = cy;
 		}
 		
 	}
