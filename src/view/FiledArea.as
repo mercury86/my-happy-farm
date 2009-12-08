@@ -38,7 +38,7 @@
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			Main.mainControl.dispatchEvent(new EventZheng(EventConst.EVENT_CLICK_AREA));
+			Main.mainControl.onAreaClick();
 		}
 		public function hoeing():void {
 			field.hoeing();
