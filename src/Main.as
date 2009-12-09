@@ -1,10 +1,17 @@
 ﻿package 
 {
+	import com.utils.DebugTrace;
+	import data.DataConst;
 	import data.EventConst;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import socket.ServerInfoDeal;
+	import utils.CoordinateTransform;
 	import view.BottomBar;
+	import view.Field;
+	import view.FieldArea;
+	import view.FriendBar;
 	import view.MouseFollow;
 	import view.TopBar;
 	
@@ -22,7 +29,7 @@
 	 * 										mc.gotoAndStop(value);
 	 * 									}
 	 * 来修改状态值，同时，修改mc的状态。
-	 * 显然第二种方法比第一种好用的多，跟符合opp思想。
+	 * 显然第二种方法比第一种好用的多，更符合opp思想。
 	 * 
 	 * 这里整理一下再开心农场游戏中，哪些地方会触动数据的变化：
 	 * 1.服务器传送过来的信息
@@ -38,10 +45,14 @@
 	 */
 	public class Main extends Sprite 
 	{
-		
+		//可视mc
 		private var mainStage:Sprite;
 		private var topBar:Sprite;
 		private var bottomBar:Sprite;
+		private var friendBar:FriendBar;
+		private var fieldContain:Sprite;
+		private var plantContain:Sprite;
+		private var fieldAreaContain:Sprite;
 		private var mouseFollow:MovieClip;
 		
 		public static var mainControl:MainController;
@@ -57,29 +68,97 @@
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// all start at this--------------------------------------------------
+			ServerInfoDeal.connectServer(this);
 			mainData = new MainData();
 			mainControl = new MainController(mainData);
 			
 			layout();
 			initData();
 		}
-		private function layout():void {
-			mainStage = new Sprite();
-			topBar = new TopBar();
-			bottomBar = new BottomBar(0,550);
-			mouseFollow = new MouseFollow();
-			mainData.addEventListener(EventConst.EVENT_CHANGE_OPERATE, mouseFollow.changeIcon);
-			
-			mainStage.addChild(mouseFollow);
-			addChild(mainStage);
-			addChild(topBar);
-			addChild(bottomBar);
-		}
 		private function initData():void {
 			mainData.login = true;
 			mainData.isMyFarm = true;
 			mainData.operate = "select";
 		}
+		private function layout():void {
+			stateDisplayObj()
+			//侦听mainData中的数据，调用MouseFollow中的方法
+			mainData.addEventListener(EventConst.EVENT_CHANGE_OPERATE, mouseFollow.changeIcon);
+			showDisplayObj();
+			setFarmP(DataConst.FARMCONTAIN_X,DataConst.FARMCONTAIN_Y);
+			fieldLayout(fieldContain, Field, DataConst.FIELD_ROW, DataConst.FIELD_COLS);
+			fieldLayout(fieldAreaContain, FieldArea, DataConst.FIELD_ROW, DataConst.FIELD_COLS);
+		}
+		private function stateDisplayObj():void {
+			mainStage = new Sprite();
+			topBar = new TopBar();
+			bottomBar = new BottomBar(0, 550);
+			friendBar = new FriendBar();		
+			fieldContain = new Sprite();
+			plantContain = new Sprite();
+			fieldAreaContain = new Sprite();
+			mouseFollow = new MouseFollow();
+		}
+		/**
+		 * view中元件的放置
+		 */
+		private function showDisplayObj():void {
+			mainStage.addChild(fieldContain);
+			mainStage.addChild(plantContain);
+			mainStage.addChild(fieldAreaContain);
+			mainStage.addChild(mouseFollow);
+			addChild(mainStage);
+			addChild(topBar);
+			addChild(bottomBar);
+			addChild(friendBar);
+		}
+		/**
+		 * 设置fieldAreaContain,fieldContain,plantContain三个容器的位置
+		 * @param	cx
+		 * @param	cy
+		 */
+		private function setFarmP(cx:int,cy:int):void {
+			fieldContain.x = cx;
+			fieldContain.y = cy;
+			plantContain.x = cx;
+			plantContain.y = cy;
+			fieldAreaContain.x = cx;
+			fieldAreaContain.y = cy;	
+		}
+		/**
+		 * 布局farm
+		 * @param	contain		容器
+		 * @param	mcClass		放入容器的元件的类
+		 * @param	row			行数
+		 * @param	cols		列数
+		 */
+		private function fieldLayout(contain:Sprite,mcClass:Class ,row:int, cols:int):void {
+			for (var i:int = 0; i < row; i++ ) {
+				for (var j:int=0; j < cols; j++ ) {
+					var mc:* = new mcClass(i, j);
+					var c:Array = CoordinateTransform.coorTransform(i, j);
+					mc.x = c[0];
+					mc.y = c[1];
+					contain.addChild(mc);
+					//如果现在摆放的是fieldArea，那么，将fieldArea.field赋值。
+					if (mc as FieldArea != null) {
+						var field=fieldContain.getChildByName("f" + i + "_" + j) as Field;
+						if (field != null) {
+							mc.field = field; 
+						}else {
+							DebugTrace.dtrace("code info Main.as:fieldArea没有对应的field。");
+							return;
+						}
+					}else {
+						
+					}
+				}	
+			}
+		}
+		private function plantLayout(contain:Sprite,row:int,cols:int):void {
+			
+		}
+
 	}
 	
 }
