@@ -10,7 +10,7 @@
 	{
 		private var parentPlant:Plant;
 		private var displayMc:MovieClip;//显示的mc
-		public function PlantInstance(mc:MovieClip) 
+		public function PlantInstance(mc:MovieClip)
 		{
 			this.displayMc = mc;
 			parentPlant = new Plant(mc);
