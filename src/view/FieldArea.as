@@ -18,12 +18,15 @@
 		private var _cols:int;
 		//tips提示框
 		private var tips:FieldTips;
+		private var tipsX:int= 50;
+		private var tipsY:int = -80;
 		
-		public function FieldArea(sx:int,sy:int) 
+		public function FieldArea(sx:int,sy:int)
 		{
 			tips = new FieldTips();
 			_row = sx;
 			_cols = sy;
+			name = "fa" + sx + "_" + sy;
 			addEvent();
 		}
 		private function addEvent():void {
@@ -34,12 +37,12 @@
 		
 		private function onOut(e:MouseEvent):void 
 		{
-			
+			hideTips();
 		}
 		
 		private function onOver(e:MouseEvent):void 
 		{
-			
+			showTips("");
 		}
 		
 		private function onClick(e:MouseEvent):void 
@@ -68,9 +71,13 @@
 			crop.putWorm();
 		}
 		public function showTips(obj:Object):void {
+			parent.parent.addChild(tips);
+			tips.x = parent.x+this.x+tipsX;
+			tips.y = parent.y+this.y+tipsY;
 			tips.showTips(obj);
 		}
 		public function hideTips():void {
+			parent.parent.removeChild(tips);
 			tips.hideTips();
 		}
 		

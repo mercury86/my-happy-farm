@@ -13,6 +13,9 @@
 		public static const FIELD_HEIGHT:int = 100;
 		public static const FARMCONTAIN_X:int = 50;
 		public static const FARMCONTAIN_Y:int = 300;
+		
+		public static const LOADING_X:int = 200;
+		public static const LOADING_Y:int = 200;
 		public function DataConst() 
 		{
 			

@@ -11,10 +11,12 @@
 		private var _currentShow:int;//标识当前最左边显示的friend
 		private var pageShowTotalNum:int;//每页显示多少个朋友
 		private var friendList:Array;
-		public function FriendBar() 
+		public function FriendBar(cx:int,cy:int) 
 		{
 			currentShow = 0;
 			pageShowTotalNum = 8;
+			x = cx;
+			y = cy;
 		}
 		/**
 		 * 显示好友列表

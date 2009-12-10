@@ -3,12 +3,15 @@
 	import com.utils.DebugTrace;
 	import data.DataConst;
 	import data.EventConst;
+	import data.NumWithClass;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import socket.ServerInfoDeal;
 	import utils.CoordinateTransform;
+	import view.Bg;
 	import view.BottomBar;
+	import view.FarmContain;
 	import view.Field;
 	import view.FieldArea;
 	import view.FriendBar;
@@ -45,8 +48,9 @@
 	 */
 	public class Main extends Sprite 
 	{
-		//可视mc
+		//可视mc，作为view,它应该能直接控制mainControl，因此，view和mainControl是有联系的。这里，我把mainControl设置成静态公共变量
 		private var mainStage:Sprite;
+		private var bg:Bg;//游戏背景
 		private var topBar:Sprite;
 		private var bottomBar:Sprite;
 		private var friendBar:FriendBar;
@@ -75,11 +79,6 @@
 			layout();
 			initData();
 		}
-		private function initData():void {
-			mainData.login = true;
-			mainData.isMyFarm = true;
-			mainData.operate = "select";
-		}
 		private function layout():void {
 			stateDisplayObj()
 			//侦听mainData中的数据，调用MouseFollow中的方法
@@ -91,18 +90,20 @@
 		}
 		private function stateDisplayObj():void {
 			mainStage = new Sprite();
+			bg = new Bg();
 			topBar = new TopBar();
-			bottomBar = new BottomBar(0, 550);
-			friendBar = new FriendBar();		
-			fieldContain = new Sprite();
-			plantContain = new Sprite();
-			fieldAreaContain = new Sprite();
+			bottomBar = new BottomBar(250, 500);
+			friendBar = new FriendBar(0,550);		
+			fieldContain = new FarmContain();
+			plantContain = new FarmContain();
+			fieldAreaContain = new FarmContain();
 			mouseFollow = new MouseFollow();
 		}
 		/**
 		 * view中元件的放置
 		 */
 		private function showDisplayObj():void {
+			mainStage.addChild(bg);
 			mainStage.addChild(fieldContain);
 			mainStage.addChild(plantContain);
 			mainStage.addChild(fieldAreaContain);
@@ -155,10 +156,30 @@
 				}	
 			}
 		}
-		private function plantLayout(contain:Sprite,row:int,cols:int):void {
-			
+		/**
+		 * 在农田中放置植物
+		 * @param	contain		装载该元件的容器
+		 * @param	num		该元件在列表中的编号
+		 * @param	row		放置的位置
+		 * @param	cols	放置的位置
+		 * @param	status	状态
+		 */
+		private function plantLayout(contain:Sprite, num:int, row:int, cols:int, status:int):void {
+			var mcClass:Class = NumWithClass.numWithClass(num);
+			var plantMc:*= new mcClass();
+			var fieldArea:FieldArea = contain.getChildByName("fa" + row + "_" + cols) as FieldArea;
+			var c:Array = CoordinateTransform.coorTransform(row, cols);
+			fieldArea.crop = plantMc;//给fieldArea赋值
+			contain.addChild(plantMc);
+			plantMc.name = "p" + row + "_" + cols;
+			plantMc.x = c[0];
+			plantMc.y = c[1];
 		}
-
+		private function initData():void {
+			mainData.login = true;
+			mainData.isMyFarm = true;
+			mainData.operate = "select";
+			bg.url = "bg.jpg";
+		}
 	}
-	
 }
