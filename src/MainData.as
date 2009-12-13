@@ -13,6 +13,7 @@
 		private var _login:Boolean;
 		private var _isMyFarm:Boolean;
 		private var _operate:String;
+		private var _bgUrl:String;
 		public function MainData() 
 		{
 			
@@ -41,6 +42,16 @@
 		public function set isMyFarm(value:Boolean):void 
 		{
 			_isMyFarm = value;
+		}
+		
+		public function get bgUrl():String { return _bgUrl; }
+		
+		public function set bgUrl(value:String):void 
+		{
+			_bgUrl = value;
+			var event:EventZheng = new EventZheng(EventConst.EVENT_CHANGE_BG);
+			event.obj.bgUrl = value;
+			dispatchEvent(event);
 		}
 		
 	}

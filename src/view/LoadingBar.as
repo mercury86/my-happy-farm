@@ -32,10 +32,10 @@
 		 */
 		public  function loadingPre(loadedNum:int, totalNum:int):int {
 			var per:int = Math.floor(loadedNum / totalNum * 100);
-			if (per == 100) {
-				parent.removeChild(instance);
-			}
 			return per;
+		}
+		public function delThis():void {
+			parent.removeChild(instance);
 		}
 		
 	}

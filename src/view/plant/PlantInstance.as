@@ -8,7 +8,7 @@
 	 */
 	public class PlantInstance extends MovieClip implements IPlant
 	{
-		private var parentPlant:Plant;
+		private var parentPlant:IPlant;
 		private var displayMc:MovieClip;//显示的mc
 		public function PlantInstance(mc:MovieClip)
 		{
