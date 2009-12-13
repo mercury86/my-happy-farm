@@ -30,7 +30,6 @@
 			addEvent();
 		}
 		private function addEvent():void {
-			addEventListener(MouseEvent.CLICK, onClick);
 			addEventListener(MouseEvent.ROLL_OVER, onOver);
 			addEventListener(MouseEvent.ROLL_OUT, onOut);
 		}
@@ -45,10 +44,6 @@
 			showTips("");
 		}
 		
-		private function onClick(e:MouseEvent):void 
-		{
-			Main.mainControl.onAreaClick();
-		}
 		public function hoeing():void {
 			field.hoeing();
 		}

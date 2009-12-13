@@ -1,8 +1,10 @@
 ﻿package view 
 {
+	import com.event.EventZheng;
 	import com.utils.DebugTrace;
 	import flash.display.Loader;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.ProgressEvent;
@@ -14,11 +16,14 @@
 	 */
 	public class Bg extends Sprite 
 	{
-		private var _url:String;
 		private var loadingBar:LoadingBar;
 		public function Bg() 
 		{
-			loadingBar = LoadingBar.getInstance();
+		}
+		public function loadBg(parentMc:Stage,loadingBar:LoadingBar,url:String):void {
+			loading(url);
+			this.loadingBar = loadingBar;
+			parentMc.addChild(loadingBar);
 		}
 		private function loading(str:String):void {
 			var loader:Loader = new Loader();
@@ -26,6 +31,7 @@
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e:Event):void {
 				DebugTrace.dtrace("code info Bg.as:下载完成。")
 				addChild(loader);
+				loadingBar.delThis();
 				//trace(loader);//[object Loader]
 				//trace(loader.contains);//function Function() {}
 				//trace(loader.contentLoaderInfo);//[object LoaderInfo]
@@ -38,14 +44,6 @@
 			loader.contentLoaderInfo.addEventListener(HTTPStatusEvent.HTTP_STATUS, function(e:HTTPStatusEvent):void {
 				DebugTrace.dtrace("code info Bg.as:httpStatus---" + e);
 			})
-		}
-		public function get url():String { return _url; }
-		
-		public function set url(value:String):void 
-		{
-			_url = value;
-			addChild(loadingBar);
-			loading(value);
 		}
 	}
 	

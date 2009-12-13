@@ -3,6 +3,7 @@
 	import com.event.EventZheng;
 	import data.EventConst;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	/**
 	 * 负责修改数据,界面如果有互动，直接调用该类中的方法
@@ -15,7 +16,7 @@
 		{
 			this.mainData = mainData;
 		}
-		public function onAreaClick():void 
+		public function onAreaClick(e:MouseEvent):void 
 		{
 			//查看当前是什么操作。
 			var type:String = mainData.operate;
