@@ -10,14 +10,12 @@
 	{
 		private var _row:int;
 		private var _cols:int;
+		private var _status:int;
 		public function Field(sx:int,sy:int) 
 		{
 			_row = sx;
 			_cols = sy;
 			name = "f" + sx + "_" + sy;
-		}
-		public function hoeing():void {
-			
 		}
 		public function watering():void {
 			
@@ -41,6 +39,14 @@
 		public function set row(value:int):void 
 		{
 			_row = value;
+		}
+		
+		public function get status():int { return _status; }
+		
+		public function set status(value:int):void 
+		{
+			_status = value;
+			gotoAndStop(value);
 		}
 		
 	}

@@ -2,13 +2,13 @@
 {
 	import com.utils.DebugTrace;
 	import data.DataConst;
-	import flash.display.Sprite;
+	import flash.display.MovieClip;
 	
 	/**
 	 * ...
 	 * @author zhengzihua
 	 */
-	public class LoadingBar extends Sprite
+	public class LoadingBar extends MovieClip
 	{
 		private static var instance:LoadingBar
 		public function LoadingBar(singletonLoadingBar:SingletonLoadingBar) 
@@ -35,6 +35,7 @@
 			return per;
 		}
 		public function delThis():void {
+			instance.gotoAndStop(1);
 			parent.removeChild(instance);
 		}
 		

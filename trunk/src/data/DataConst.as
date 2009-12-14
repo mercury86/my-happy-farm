@@ -16,6 +16,8 @@
 		
 		public static const LOADING_X:int = 200;
 		public static const LOADING_Y:int = 200;
+		
+		public static const PLANT_LIB_URL:String = "plant_lib.swf";
 		public function DataConst() 
 		{
 			

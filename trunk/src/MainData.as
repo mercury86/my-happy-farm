@@ -1,6 +1,7 @@
 ﻿package  
 {
 	import com.event.EventZheng;
+	import com.utils.DebugTrace;
 	import data.EventConst;
 	import flash.events.EventDispatcher;
 	
@@ -27,7 +28,7 @@
 			var event:EventZheng = new EventZheng(EventConst.EVENT_CHANGE_OPERATE);
 			event.obj.operate = value;
 			dispatchEvent(event);
-			
+			DebugTrace.dtrace("code info MainData.as:当前操作为" + value);
 		}
 		
 		public function get login():Boolean { return _login; }

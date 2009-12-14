@@ -1,5 +1,9 @@
 ﻿package 
 {
+	import com.event.EventZheng;
+	import com.utils.BatchLoad;
+	import data.DataConst;
+	import data.EventConst;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import socket.ServerInfoDeal;
@@ -37,6 +41,7 @@
 		private var mainData:MainData;
 		private var mainView:MainView;
 		
+		private var batchLoad:BatchLoad;
 		public function Main():void 
 		{
 			if (stage) init();
@@ -46,10 +51,25 @@
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// all start at this--------------------------------------------------
+			//读取plant_lib.swf文件
+			loadLib();
+		}
+		private function loadLib():void {
+			var libArr:Array = [];
+			libArr.push(DataConst.PLANT_LIB_URL);
+			batchLoad= new  BatchLoad(libArr, "same", EventConst.EVENT_LIB_LOADCOMPLETE);
+			batchLoad.load();
+			batchLoad.addEventListener(EventConst.EVENT_LIB_LOADCOMPLETE, onLibLoaded);
+		}
+		
+		private function onLibLoaded(e:EventZheng):void 
+		{
+			ServerInfoDeal.connectServer(this);//连接服务器
 			mainData = new MainData();
 			mainControl = new MainController(mainData);
-			mainView = new MainView(mainControl,mainData, this.stage);
-			ServerInfoDeal.connectServer(this);//连接服务器
+			mainView = new MainView(mainControl, mainData, this.stage);	
+			batchLoad.removeEventListener(EventConst.EVENT_LIB_LOADCOMPLETE, onLibLoaded);
+			
 			initData();
 		}
 		private function initData():void {
@@ -58,6 +78,7 @@
 			mainData.operate = "select";
 			mainData.bgUrl = "bg.jpg";
 		}
+		
 		
 	}
 }

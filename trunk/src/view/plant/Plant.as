@@ -10,10 +10,14 @@
 	{
 		private var _row:int;
 		private var _cols:int;
+		private var _status:int;
 		private var displayMc:MovieClip;
 		public function Plant(mc:MovieClip) 
 		{
 			displayMc = mc;
+		}
+		public function hoeing():void {
+			
 		}
 		public function reap():void {
 			
@@ -42,6 +46,14 @@
 		public function set cols(value:int):void 
 		{
 			_cols = value;
+		}
+		
+		public function get status():int { return _status; }
+		
+		public function set status(value:int):void 
+		{
+			_status = value;
+			displayMc.gotoAndStop(value);
 		}
 		
 	}
