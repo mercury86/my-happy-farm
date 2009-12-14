@@ -1,10 +1,11 @@
 ﻿package view 
 {
 	import com.event.EventZheng;
+	import com.utils.DebugTrace;
 	import data.EventConst;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import view.plant.Plant;
+	import view.plant.PlantInstance;
 	
 	/**
 	 * ...
@@ -13,7 +14,7 @@
 	public class FieldArea extends Sprite implements ITips
 	{
 		private var _field:Field;
-		private var _crop:Plant;
+		private var _crop:PlantInstance;
 		private var _row:int;
 		private var _cols:int;
 		//tips提示框
@@ -24,6 +25,7 @@
 		public function FieldArea(sx:int,sy:int)
 		{
 			tips = new FieldTips();
+			tips.name = "tips";
 			_row = sx;
 			_cols = sy;
 			name = "fa" + sx + "_" + sy;
@@ -36,16 +38,29 @@
 		
 		private function onOut(e:MouseEvent):void 
 		{
-			hideTips();
+			if (parent.parent.getChildByName("tips")!=null) {
+				hideTips();
+			}else {
+				//DebugTrace.dtrace("code info FieldArea.as:场景中没有tips")
+			}
+			
 		}
 		
 		private function onOver(e:MouseEvent):void 
 		{
-			showTips("");
+			if(crop!=null){
+				showTips("");
+			}else {
+
+			}
 		}
 		
 		public function hoeing():void {
-			field.hoeing();
+			if(crop!=null){
+				crop.hoeing();
+			}else {
+				
+			}
 		}
 		public function watering():void {
 			field.watering();
@@ -90,11 +105,12 @@
 			_cols = value;
 		}
 		
-		public function get crop():Plant { return _crop; }
+		public function get crop():PlantInstance { return _crop; }
 		
-		public function set crop(value:Plant):void 
+		public function set crop(value:PlantInstance):void 
 		{
 			_crop = value;
+			trace("value:"+value)
 		}
 		
 		public function get field():Field { return _field; }

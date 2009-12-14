@@ -13,6 +13,7 @@
 	import socket.ServerInfoDeal;
 	import utils.CoordinateTransform;
 	import view.*;
+	import view.plant.PlantInstance;
 	/**
 	 * ...
 	 * @author zheng sir
@@ -29,10 +30,10 @@
 		private var plantContain:Sprite;
 		private var fieldAreaContain:Sprite;
 		private var mouseFollow:MovieClip;
-		private var loadingBar:LoadingBar;
+		private var loadingBar:LoadingBar;//loading条
 		
-		private var mainControl:MainController;
-		private var mainData:MainData;
+		public static var mainControl:MainController;
+		public static var mainData:MainData;
 		private var targetStage:Stage;
 		public function MainView(control:MainController,mode:MainData,target:Stage) 
 		{
@@ -40,6 +41,9 @@
 			mainData = mode;
 			targetStage = target;
 			layout();
+			//test--------
+			plantLayout(plantContain, fieldAreaContain, 10001, 0, 1, 4);//植物的状态
+			landLayput(fieldContain, 0, 1, 2);//土地的状态
 		}
 		private function layout():void {
 			stateDisplayObj()
@@ -71,11 +75,12 @@
 			mainStage.addChild(fieldContain);
 			mainStage.addChild(plantContain);
 			mainStage.addChild(fieldAreaContain);
-			mainStage.addChild(mouseFollow);
+			
 			targetStage.addChild(mainStage);
 			targetStage.addChild(topBar);
 			targetStage.addChild(bottomBar);
 			targetStage.addChild(friendBar);
+			targetStage.addChild(mouseFollow);
 		}
 		/**
 		 * 设置fieldAreaContain,fieldContain,plantContain三个容器的位置
@@ -130,16 +135,22 @@
 		 * @param	cols	放置的位置
 		 * @param	status	状态
 		 */
-		private function plantLayout(contain:Sprite, num:int, row:int, cols:int, status:int):void {
+		private function plantLayout(contain:Sprite,areaContain:Sprite, num:int, row:int, cols:int, status:int):void {
 			var mcClass:Class = NumWithClass.numWithClass(num);
 			var plantMc:*= new mcClass();
-			var fieldArea:FieldArea = contain.getChildByName("fa" + row + "_" + cols) as FieldArea;
+			var fieldArea:FieldArea = areaContain.getChildByName("fa" + row + "_" + cols) as FieldArea;
 			var c:Array = CoordinateTransform.coorTransform(row, cols);
-			fieldArea.crop = plantMc;//给fieldArea赋值
-			contain.addChild(plantMc);
-			plantMc.name = "p" + row + "_" + cols;
-			plantMc.x = c[0];
-			plantMc.y = c[1];
+			var plantInstance:PlantInstance = new PlantInstance(plantMc);
+			plantInstance.status = status;
+			fieldArea.crop = plantInstance;//给fieldArea赋值
+			contain.addChild(plantInstance);
+			plantInstance.name = "p" + row + "_" + cols;
+			plantInstance.x = c[0];
+			plantInstance.y = c[1];
+		}
+		private function landLayput(contain:Sprite, row:int, cols:int, status:int) {
+			var field:Field = contain.getChildByName("f" + row + "_" + cols) as Field;
+			field.status = status;
 		}
 	}
 
