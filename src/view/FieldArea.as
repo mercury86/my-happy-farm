@@ -34,6 +34,38 @@
 		private function addEvent():void {
 			addEventListener(MouseEvent.ROLL_OVER, onOver);
 			addEventListener(MouseEvent.ROLL_OUT, onOut);
+			addEventListener(MouseEvent.CLICK, onClick);
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			var type:String = MainView.mainData.operate;
+			switch(type) {
+				case "select":
+					
+					break;
+				case "hoeing":
+					hoeing();
+					break;
+				case "watering":
+					watering();
+					break;
+				case "killWorm":
+					killWorm();
+					break;
+				case "putWorm":
+					putWorm();
+					break;
+				case "KillWeed":
+					killWeed();
+					break;
+				case "putWeed":
+					putWeed();
+					break;
+				case "reap":
+					reap();
+					break;
+			}
 		}
 		
 		private function onOut(e:MouseEvent):void 

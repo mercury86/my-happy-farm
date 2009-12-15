@@ -77,8 +77,6 @@
 			mainData.isMyFarm = true;
 			mainData.operate = "select";
 			mainData.bgUrl = "bg.jpg";
-		}
-		
-		
+		}	
 	}
 }
