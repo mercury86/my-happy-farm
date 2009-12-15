@@ -26,6 +26,16 @@
 			killWorm_mc.addEventListener(MouseEvent.CLICK, function (e:MouseEvent):void { operate = "killWorm" } );
 			killWeed_mc.addEventListener(MouseEvent.CLICK, function (e:MouseEvent):void { operate = "killWeed" } );
 			reap_mc.addEventListener(MouseEvent.CLICK, function (e:MouseEvent):void { operate = "reap" } );
+			
+			//仓库
+			storeHouse_mc.addEventListener(MouseEvent.CLICK, onStoreHouse);
+		}
+		
+		private function onStoreHouse(e:MouseEvent):void 
+		{
+			//仓库应该是一个单例模式，
+			//获取仓库对象
+			//添加到显示列表，应该和buttomBar在同一级别
 		}
 		public function get operate():String { return _operate; }
 		
