@@ -57,6 +57,7 @@
 		private function loadLib():void {
 			var libArr:Array = [];
 			libArr.push(DataConst.PLANT_LIB_URL);
+			
 			batchLoad= new  BatchLoad(libArr, "same", EventConst.EVENT_LIB_LOADCOMPLETE);
 			batchLoad.load();
 			batchLoad.addEventListener(EventConst.EVENT_LIB_LOADCOMPLETE, onLibLoaded);
