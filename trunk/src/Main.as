@@ -64,7 +64,7 @@
 		
 		private function onLibLoaded(e:EventZheng):void 
 		{
-			ServerInfoDeal.connectServer(this);//连接服务器
+			ServerInfoDeal.connectServer(mainView);//连接服务器
 			mainData = new MainData();
 			mainControl = new MainController(mainData);
 			mainView = new MainView(mainControl, mainData, this.stage);	
