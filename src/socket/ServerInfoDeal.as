@@ -2,6 +2,7 @@
 {
 	import com.adobe.serialization.json.JSON;
 	import com.utils.DebugTrace;
+	import flash.events.AsyncErrorEvent;
 	import flash.events.StatusEvent;
 	import flash.net.LocalConnection;
 	
@@ -40,17 +41,19 @@
 			}	
 		}
 		public static function farmDeal(str:String):void {
-			DebugTrace.dtrace("code info ServerInfoDeal.as:收到信息："+str)
+			DebugTrace.dtrace("code info ServerInfoDeal.as:收到信息：" + str)
 			var obj:Object = JSON.decode(str);
 			dealInfo(mainView, obj);
 		}
 		public static function dealInfo(mainView:MainView, obj:Object):void {
 			DebugTrace.dtrace("code info SeverInfoDeal.as:类型--" + obj.reqType);
 			switch(obj.reqType) {
+				case "100001"://登陆信息
+					DealLoginInfo.dealLoginInfo();
 				case "100002"://用户信息
 					DealUserInfo.dealUserInfo(mainView, obj);
 					break;
-				case "100003":
+				case "100003"://农田信息
 					break;
 				default:
 					DebugTrace.dtrace("code error ServerInfoDeal.as:没有的类型.")
@@ -58,6 +61,7 @@
 			}
 		}
 		public static function sendMsg(str:String) {
+			str = JSON.encode(str);
 			try{
 				mySend.send("localImitation", "imitationDeal", str);
 			}catch (e:Error) {
