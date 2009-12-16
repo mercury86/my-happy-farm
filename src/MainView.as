@@ -21,16 +21,16 @@
 	public class MainView 
 	{
 		//可视mc，作为view,它应该能直接控制mainControl，因此，view和mainControl是有联系的。这里，我把mainControl设置成静态公共变量
-		private var mainStage:Sprite;
-		private var bg:Bg;//游戏背景
-		private var topBar:Sprite;
-		private var bottomBar:Sprite;
-		private var friendBar:FriendBar;
-		private var fieldContain:Sprite;
-		private var plantContain:Sprite;
-		private var fieldAreaContain:Sprite;
-		private var mouseFollow:MovieClip;
-		private var loadingBar:LoadingBar;//loading条
+		public var mainStage:Sprite;
+		public var bg:Bg;//游戏背景
+		public var topBar:Sprite;
+		public var bottomBar:Sprite;
+		public var friendBar:FriendBar;
+		public var fieldContain:Sprite;
+		public var plantContain:Sprite;
+		public var fieldAreaContain:Sprite;
+		public var mouseFollow:MovieClip;
+		public var loadingBar:LoadingBar;//loading条
 		
 		public static var mainControl:MainController;
 		public static var mainData:MainData;
