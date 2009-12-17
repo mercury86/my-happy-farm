@@ -5,7 +5,9 @@
 	import data.DataConst;
 	import data.EventConst;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
+	import socket.RequestToServer;
 	import socket.ServerInfoDeal;
 	/**
 	 * Main文件只用做初始布局，不打算做其他的操作。
@@ -36,12 +38,12 @@
 	 * blog ------ http://blog.sina.com.cn/u/1442798893
 	 */
 	public class Main extends Sprite 
-	{
+	{	
 		private var mainControl:MainController;
 		private var mainData:MainData;
 		private var mainView:MainView;
 		
-		private var batchLoad:BatchLoad;
+		public static var thisStage:Stage;
 		public function Main():void 
 		{
 			if (stage) init();
@@ -51,33 +53,44 @@
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// all start at this--------------------------------------------------
-			//读取plant_lib.swf文件
-			loadLib();
-		}
-		private function loadLib():void {
-			var libArr:Array = [];
-			libArr.push(DataConst.PLANT_LIB_URL);
-			
-			batchLoad= new  BatchLoad(libArr, "same", EventConst.EVENT_LIB_LOADCOMPLETE);
-			batchLoad.load();
-			batchLoad.addEventListener(EventConst.EVENT_LIB_LOADCOMPLETE, onLibLoaded);
+			/**
+			 * 1.连接服务器
+			 * 2.请求素材数据
+			 * 3.数据导入完成，布局view
+			 * 4.请求个人信息，和农场信息，以及好友列表
+			 */
+			ServerInfoDeal.connectServer();//连接服务器
+			thisStage = stage;
+			//登陆请求
+			var requestToserver:RequestToServer = RequestToServer.getInstance();
+			requestToserver.req_login(DataConst.USERID);
+			//侦听素材导入
+			stage.addEventListener(EventConst.EVENT_LIB_LOADCOMPLETE, onLibLoaded);
 		}
 		
 		private function onLibLoaded(e:EventZheng):void 
-		{
-			ServerInfoDeal.connectServer(mainView);//连接服务器
+		{		
 			mainData = new MainData();
 			mainControl = new MainController(mainData);
-			mainView = new MainView(mainControl, mainData, this.stage);	
-			batchLoad.removeEventListener(EventConst.EVENT_LIB_LOADCOMPLETE, onLibLoaded);
+			mainView = MainView.getInstance();
+			mainView.setData(mainControl, mainData, this.stage);	
+			stage.removeEventListener(EventConst.EVENT_LIB_LOADCOMPLETE, onLibLoaded);
+			
+			var requestToserver:RequestToServer = RequestToServer.getInstance();
+			//农场主信息请求
+			requestToserver.req_userInfo();
+			//农田信息请求
+			requestToserver.req_farmInfo(DataConst.USERID);
+			//请求好友列表
+			requestToserver.req_friendList();	
 			
 			initData();
 		}
 		private function initData():void {
 			mainData.login = true;
-			mainData.isMyFarm = true;
+			mainData.farmID =DataConst.USERID;
 			mainData.operate = "select";
 			mainData.bgUrl = "bg.jpg";
-		}	
+		}
 	}
 }

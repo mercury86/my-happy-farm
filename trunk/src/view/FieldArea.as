@@ -65,6 +65,11 @@
 				case "reap":
 					reap();
 					break;
+				case "fertilize":
+					fertilize();
+					break;
+				default:
+					DebugTrace.dtrace("code info FieldArea.as:没有该操作。")
 			}
 		}
 		
@@ -104,13 +109,28 @@
 			field.putWeed();
 		}
 		public function reap():void {
-			crop.reap();
+			if (crop != null) {
+				crop.reap();
+			}else {
+				
+			}	
 		}
 		public function killWorm():void {
-			crop.killWorm();
+			if(crop!=null){
+				crop.killWorm();
+			}else {
+				
+			}
 		}
 		public function putWorm():void {
-			crop.putWorm();
+			if(crop!=null){
+				crop.putWorm();
+			}else {
+				
+			}
+		}
+		public function fertilize():void {
+			field.fertilize();
 		}
 		public function showTips(obj:Object):void {
 			parent.parent.addChild(tips);
@@ -142,7 +162,6 @@
 		public function set crop(value:PlantInstance):void 
 		{
 			_crop = value;
-			trace("value:"+value)
 		}
 		
 		public function get field():Field { return _field; }

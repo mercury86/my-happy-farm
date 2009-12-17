@@ -32,6 +32,8 @@
 				DebugTrace.dtrace("code info Bg.as:下载完成。")
 				addChild(loader);
 				loadingBar.delThis();
+				loader.x = -(loader.width - stage.stageWidth) * 0.5;
+				loader.y = -(loader.height - stage.stageHeight) * 0.5;
 				//trace(loader);//[object Loader]
 				//trace(loader.contains);//function Function() {}
 				//trace(loader.contentLoaderInfo);//[object LoaderInfo]
