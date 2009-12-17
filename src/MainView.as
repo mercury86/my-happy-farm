@@ -35,15 +35,36 @@
 		public static var mainControl:MainController;
 		public static var mainData:MainData;
 		private var targetStage:Stage;
-		public function MainView(control:MainController,mode:MainData,target:Stage) 
+		private static var instance:MainView;
+		public function MainView(sigleton:SingletonMainView) 
 		{
+			
+		}
+		public static function getInstance():MainView {
+			if (instance == null) {
+				instance=new MainView(new SingletonMainView())
+			}else {
+				DebugTrace.dtrace("code info MainView.as:已经实例化.")
+			}
+			return instance;
+		}
+		public function setData(control:MainController,mode:MainData,target:Stage):void {
 			mainControl = control;
 			mainData = mode;
 			targetStage = target;
 			layout();
+			
+			test();
+		}
+		public function test():void {
 			//test--------
-			plantLayout(plantContain, fieldAreaContain, 10001, 0, 1, 4);//植物的状态
-			landLayput(fieldContain, 0, 1, 2);//土地的状态
+			plantLayout(plantContain, fieldAreaContain,1, 0, 1, 4);//植物的状态
+			plantLayout(plantContain, fieldAreaContain,0, 1, 2, 2);//植物的状态
+			plantLayout(plantContain, fieldAreaContain,2, 1, 0, 3);//植物的状态
+			landLayout(fieldContain, 0, 1, 3);//土地的状态
+			landLayout(fieldContain, 1, 2, 3);//土地的状态
+			landLayout(fieldContain, 1, 0, 3);//土地的状态
+			landLayout(fieldContain, 1, 1, 4);//土地的状态
 		}
 		private function layout():void {
 			stateDisplayObj()
@@ -135,7 +156,7 @@
 		 * @param	cols	放置的位置
 		 * @param	status	状态
 		 */
-		private function plantLayout(contain:Sprite,areaContain:Sprite, num:int, row:int, cols:int, status:int):void {
+		public function plantLayout(contain:Sprite,areaContain:Sprite, num:int, row:int, cols:int, status:int):void {
 			var mcClass:Class = NumWithClass.numWithClass(num);
 			var plantMc:*= new mcClass();
 			var fieldArea:FieldArea = areaContain.getChildByName("fa" + row + "_" + cols) as FieldArea;
@@ -148,10 +169,11 @@
 			plantInstance.x = c[0];
 			plantInstance.y = c[1];
 		}
-		private function landLayput(contain:Sprite, row:int, cols:int, status:int) {
+		public function landLayout(contain:Sprite, row:int, cols:int, status:int) {
 			var field:Field = contain.getChildByName("f" + row + "_" + cols) as Field;
 			field.status = status;
 		}
 	}
 
 }
+class SingletonMainView{}

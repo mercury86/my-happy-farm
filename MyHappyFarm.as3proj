@@ -15,7 +15,6 @@
   <classpaths>
     <class path="src" />
     <class path="..\zhengutils" />
-    <class path="..\As3corelib" />
   </classpaths>
   <!-- Build options -->
   <build>

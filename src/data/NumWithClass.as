@@ -16,7 +16,7 @@
 		}
 		public static function numWithClass(num:int):Class {
 			var mcClass:Class;
-			return mcClass=ApplicationDomain.currentDomain.getDefinition("plant_"+num) as Class;
+			return mcClass=ApplicationDomain.currentDomain.getDefinition("plant_"+num) as Class;       
 		}
 		
 	}
