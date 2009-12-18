@@ -11,6 +11,10 @@
 		private var parentPlant:Plant;
 		private var displayMc:MovieClip;//显示的mc
 		private var _status:int;
+		
+		private var plantName:String;
+		private var periodNum:int;
+		private var periodTime:int;//阶段成熟剩余的时间
 		public function PlantInstance(mc:MovieClip)
 		{
 			this.displayMc = mc;

@@ -20,7 +20,7 @@
 		{
 			
 		}
-		public static function connectServer() {
+		public static function connectServer():void {
 			myRec = new LocalConnection();
 			mySend = new LocalConnection();
 			myRec.connect("localFarm");
@@ -42,8 +42,15 @@
 		public static function farmDeal(str:String):void {
 			DebugTrace.dtrace("code info ServerInfoDeal.as:收到信息：" + str)
 			var obj:Object = JSON.decode(str);
-			mainView = MainView.getInstance();
-			dealInfo(mainView, obj);
+			if (obj.status == 1) {
+				mainView = MainView.getInstance();
+				dealInfo(mainView, obj.data);
+			}else {
+				//显示错误提示
+				DebugTrace.dtrace("code info ServerInfoDeal.as:操作失败---" + obj.error);
+				return;
+			}
+			
 		}
 		public static function dealInfo(mainView:MainView, obj:Object):void {
 			DebugTrace.dtrace("code info SeverInfoDeal.as:收到信息编号为-----------" + obj.resType);
@@ -76,16 +83,20 @@
 					dealWeed.dealKillWeed(mainView,obj);
 					break;
 				case 30004://杀虫
-				
+					var dealKillWorm:DealPlant = DealPlant.getInstance();
+					dealKillWorm.dealKillWorm(mainView, obj);
 					break;
 				case 30005://放虫
-				
+					var dealPutWorm:DealPlant = DealPlant.getInstance();
+					dealPutWorm.dealPutWorm(mainView, obj);
 					break;
 				case 30006://放草
-				
+					var putWeed:DealField = DealField.getInstance();
+					putWeed.dealPutWeed(mainView,obj);
 					break;
 				case 30007://收获
-				
+					var reap:DealPlant = DealPlant.getInstance();
+					reap.dealReap(mainView,obj);
 					break;
 				case 30008://一键摘取
 				
@@ -107,7 +118,7 @@
 					break;			
 			}
 		}
-		public static function sendMsg(obj:Object) {
+		public static function sendMsg(obj:Object):void {
 			var str:String = JSON.encode(obj);
 			try{
 				mySend.send("localImitation", "imitationDeal", str);

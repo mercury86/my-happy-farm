@@ -15,27 +15,35 @@
 	import view.*;
 	import view.plant.PlantInstance;
 	/**
-	 * ...
+	 * 单例，全局就这一份，存储所有的视图
 	 * @author zheng sir
 	 */
 	public class MainView 
 	{
-		//可视mc，作为view,它应该能直接控制mainControl，因此，view和mainControl是有联系的。这里，我把mainControl设置成静态公共变量
-		public var mainStage:Sprite;
+		public var mainStage:Sprite;//游戏场景
 		public var bg:Bg;//游戏背景
-		public var topBar:Sprite;
-		public var bottomBar:Sprite;
-		public var friendBar:FriendBar;
+		public var topBar:Sprite;//个人信息以及商店等。
+		public var bottomBar:Sprite;//操作栏
+		public var friendBar:FriendBar;//好友栏
+		//土地、植物、操作区域的三个容器
 		public var fieldContain:Sprite;
 		public var plantContain:Sprite;
 		public var fieldAreaContain:Sprite;
-		public var mouseFollow:MovieClip;
+		//存放21块田的信息
+		public var fieldArr:Array=[];
+		public var plantArr:Array=[];
+		public var fieldAreaArr:Array=[];
+		
+		public var mouseFollow:MovieClip;//鼠标跟随
 		public var loadingBar:LoadingBar;//loading条
 		
-		public static var mainControl:MainController;
-		public static var mainData:MainData;
+		
+		public var mainControl:MainController;
+		public var mainData:MainData;
+		
 		private var targetStage:Stage;
-		private static var instance:MainView;
+		private static var instance:MainView;//实例
+		
 		public function MainView(sigleton:SingletonMainView) 
 		{
 			
@@ -52,9 +60,17 @@
 			mainControl = control;
 			mainData = mode;
 			targetStage = target;
+			iniArr()
 			layout();
 			
 			test();
+		}
+		private function iniArr():void {
+			for (var i:int; i < DataConst.FIELD_ROW; i++ ) {
+				fieldArr.push(new Array(DataConst.FIELD_COLS));
+				fieldAreaArr.push(new Array(DataConst.FIELD_COLS));
+				plantArr.push(new Array(DataConst.FIELD_COLS));
+			}
 		}
 		public function test():void {
 			//test--------
@@ -73,8 +89,8 @@
 			mainData.addEventListener(EventConst.EVENT_CHANGE_BG, function (e:EventZheng):void { bg.loadBg(targetStage,loadingBar,e.obj.bgUrl)} );
 			showDisplayObj();
 			setFarmP(DataConst.FARMCONTAIN_X,DataConst.FARMCONTAIN_Y);
-			fieldLayout(fieldContain, Field, DataConst.FIELD_ROW, DataConst.FIELD_COLS);
-			fieldLayout(fieldAreaContain, FieldArea, DataConst.FIELD_ROW, DataConst.FIELD_COLS);
+			fieldLayout(fieldContain, fieldArr,Field, DataConst.FIELD_ROW, DataConst.FIELD_COLS);
+			fieldLayout(fieldAreaContain,fieldAreaArr, FieldArea, DataConst.FIELD_ROW, DataConst.FIELD_COLS);
 		}
 		private function stateDisplayObj():void {
 			loadingBar = LoadingBar.getInstance();
@@ -123,7 +139,7 @@
 		 * @param	row			行数
 		 * @param	cols		列数
 		 */
-		private function fieldLayout(contain:Sprite,mcClass:Class ,row:int, cols:int):void {
+		private function fieldLayout(contain:Sprite,arr:Array,mcClass:Class ,row:int, cols:int):void {
 			for (var i:int = 0; i < row; i++ ) {
 				for (var j:int=0; j < cols; j++ ) {
 					var mc:* = new mcClass(i, j);
@@ -131,11 +147,12 @@
 					mc.x = c[0];
 					mc.y = c[1];
 					contain.addChild(mc);
+					arr[i][j] = mc;//将实例添加到数组
 					//如果现在摆放的是fieldArea，那么，将fieldArea.field赋值。
 					if (mc is FieldArea) {
 						var fieldArea:FieldArea = mc as FieldArea;
 						fieldArea.addEventListener(MouseEvent.CLICK, mainControl.onAreaClick);
-						var field=fieldContain.getChildByName("f" + i + "_" + j) as Field;
+						var field:Field = fieldArr[i][j];
 						if (field != null) {
 							mc.field = field; 
 						}else {
@@ -168,8 +185,9 @@
 			plantInstance.name = "p" + row + "_" + cols;
 			plantInstance.x = c[0];
 			plantInstance.y = c[1];
+			plantArr[row][cols] = plantInstance;//实例添加到数组中
 		}
-		public function landLayout(contain:Sprite, row:int, cols:int, status:int) {
+		public function landLayout(contain:Sprite, row:int, cols:int, status:int):void {
 			var field:Field = contain.getChildByName("f" + row + "_" + cols) as Field;
 			field.status = status;
 		}

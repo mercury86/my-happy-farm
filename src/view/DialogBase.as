@@ -110,8 +110,9 @@
 			if (_container == null)
 				_container = new Sprite();
 			_container.addChild(dialogMc);
-			_container.x = stage.stageWidth/2
-			_container.y = stage.stageHeight/2;
+			
+			dialogMc.x = stage.stageWidth/2
+			dialogMc.y = stage.stageHeight/2;
 		}
 		
 		

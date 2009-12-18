@@ -2,7 +2,7 @@
 {	
 	import com.utils.DebugTrace;
 	/**
-	 * 像服务器发送命令
+	 * 向服务器发送命令
 	 * @author zhengzihua
 	 */
 	public class RequestToServer 
@@ -28,42 +28,42 @@
 			ServerInfoDeal.sendMsg({"reqType":100001,"uid":uid});
 		}
 		public function req_userInfo():void {
-			ServerInfoDeal.sendMsg( { "reqType":100002 } );
+			ServerInfoDeal.sendMsg( { "reqType":100002,"uid":0 } );
 		}
-		public function req_farmInfo(uid):void {
-			ServerInfoDeal.sendMsg( { "reqType":100003,"uid":uid } );
+		public function req_farmInfo(uid:int):void {
+			ServerInfoDeal.sendMsg( { "reqType":100003,"uid":0 } );
 		}
 		public function req_friendList():void {
-			ServerInfoDeal.sendMsg( { "reqType":100006} );
+			ServerInfoDeal.sendMsg( { "reqType":100006,"uid":0} );
 		}
 
 		//操作类--------------------------------------------
 		public function req_watering(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30001,"uid":id,"x":row,"y":cols} );
+			ServerInfoDeal.sendMsg( { "reqType":30001,"uid":id,"param":{"x":row,"y":cols}} );
 		}
 		public function req_feitilize(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30002,"uid":id,"x":row,"y":cols} );
+			ServerInfoDeal.sendMsg( { "reqType":30002,"uid":id,"param":{"x":row,"y":cols} });
 		}
 		public function req_killWeed(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30003,"uid":id,"x":row,"y":cols} );
+			ServerInfoDeal.sendMsg( { "reqType":30003,"uid":id,"param":{"x":row,"y":cols}} );
 		}
 		public function req_killWorm(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30004,"uid":id,"x":row,"y":cols} );
+			ServerInfoDeal.sendMsg( { "reqType":30004,"uid":id,"param":{"x":row,"y":cols} });
 		}
 		public function req_putWorm(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30005,"uid":id,"x":row,"y":cols} );
+			ServerInfoDeal.sendMsg( { "reqType":30005,"uid":id,"param":{"x":row,"y":cols}} );
 		}
 		public function req_putWeed(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30006,"uid":id,"x":row,"y":cols} );
+			ServerInfoDeal.sendMsg( { "reqType":30006,"uid":id,"param":{"x":row,"y":cols}} );
 		}
 		public function req_reap(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30007,"uid":id,"x":row,"y":cols} );
+			ServerInfoDeal.sendMsg( { "reqType":30007,"uid":id,"param":{"x":row,"y":cols}} );
 		}
 		public function req_quickReap(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30008,"uid":id,"x":row,"y":cols} );
+			ServerInfoDeal.sendMsg( { "reqType":30008,"uid":id,"param":{"x":row,"y":cols}} );
 		}
 		public function req_expendLand(id:int,row:int,cols:int):void {
-			ServerInfoDeal.sendMsg( { "reqType":30009} );
+			ServerInfoDeal.sendMsg( { "reqType":30009,"uid":0} );
 		}
 	}
 	

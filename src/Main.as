@@ -59,8 +59,8 @@
 			 * 3.数据导入完成，布局view
 			 * 4.请求个人信息，和农场信息，以及好友列表
 			 */
-			ServerInfoDeal.connectServer();//连接服务器
 			thisStage = stage;
+			ServerInfoDeal.connectServer();//连接服务器
 			//登陆请求
 			var requestToserver:RequestToServer = RequestToServer.getInstance();
 			requestToserver.req_login(DataConst.USERID);
@@ -73,7 +73,7 @@
 			mainData = new MainData();
 			mainControl = new MainController(mainData);
 			mainView = MainView.getInstance();
-			mainView.setData(mainControl, mainData, this.stage);	
+			mainView.setData(mainControl, mainData, thisStage);	
 			stage.removeEventListener(EventConst.EVENT_LIB_LOADCOMPLETE, onLibLoaded);
 			
 			var requestToserver:RequestToServer = RequestToServer.getInstance();

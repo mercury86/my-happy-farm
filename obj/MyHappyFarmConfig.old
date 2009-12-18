@@ -4,13 +4,13 @@
 <flex-config>
   <compiler>
     <source-path append="true">
-      <path-element>C:\Documents and Settings\Administrator\桌面\myHappyFarm\src</path-element>
-      <path-element>C:\Documents and Settings\Administrator\桌面\zhengutils</path-element>
+      <path-element>D:\flash\rwjflash\MopHappyFarm\src</path-element>
+      <path-element>D:\flash\rwjflash\zhengutils</path-element>
       <path-element>d:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Documents and Settings\Administrator\桌面\myHappyFarm\src\Main.as</path-element>
+    <path-element>D:\flash\rwjflash\MopHappyFarm\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

@@ -29,7 +29,7 @@
 			var num:int = obj.resources.plantNum;
 			var url:String = obj.resources.plantUrl;
 			var loadArr:Array = [];
-			for (var i = 0; i < num; i++ ) {
+			for (var i:int = 0; i < num; i++ ) {
 				loadArr.push(url + "/plant_" + i + ".swf");
 			}
 			DebugTrace.dtrace("code info DealLoginInfo.as:素材数"+num)

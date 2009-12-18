@@ -1,6 +1,7 @@
 ﻿package socket 
 {
 	import com.utils.DebugTrace;
+	import view.plant.PlantInstance;
 	
 	/**
 	 * ...
@@ -21,13 +22,21 @@
 			}
 			return instance;
 		}
+		private function appointPlant(obj:Object):PlantInstance {
+			var row:int = obj.x;
+			var cols:int = obj.y;
+			var plant:PlantInstance = mainView.plantArr[row][cols];
+			return plant;
+		}
 		public function dealKillWorm(mainView:MainView,obj:Object):void {
-			
+			DebugTrace.dtrace("code info DealPlant.as:处理杀虫。");
+			var plant:PlantInstance = appointPlant(obj);	
 		}
 		public function dealPutWorm(mainView:MainView,obj:Object):void {
-			
+			DebugTrace.dtrace("code info DealPlant.as:处理放虫。");
 		}
-		public function dealReap(mainView:MainView,obj:Object):void {
+		public function dealReap(mainView:MainView, obj:Object):void {
+			DebugTrace.dtrace("code info DealPlant.as:处理收割。");
 			
 		}
 	}

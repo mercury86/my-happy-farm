@@ -39,7 +39,8 @@
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			var type:String = MainView.mainData.operate;
+			var mainView:MainView = MainView.getInstance();
+			var type:String = mainView.mainData.operate;
 			switch(type) {
 				case "select":
 					

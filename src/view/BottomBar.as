@@ -42,7 +42,8 @@
 		public function set operate(value:String):void 
 		{
 			_operate = value;
-			MainView.mainData.operate = value;
+			var mainView:MainView = MainView.getInstance();
+			mainView.mainData.operate = value;
 		}
 		
 	}
