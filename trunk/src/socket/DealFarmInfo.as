@@ -24,6 +24,12 @@
 			}
 			return instance;
 		}
+		/**
+		 * 对应10003
+		 * 处理field
+		 * @param	mainView
+		 * @param	obj
+		 */
 		public function layoutFarm(mainView:MainView, obj:Object):void {
 			var farmArr:Array = obj.farmlands;
 			var num:int = farmArr.length;
@@ -33,7 +39,7 @@
 				var farmObj:Object = farmArr[i];
 				var row:int = farmObj.x;
 				var cols:int = farmObj.y;
-				var field:Field = fieldContain.getChildByName("f" + row + "_" + cols) as Field;
+				var field:Field = mainView.fieldArr[row][cols];
 				mainView.plantLayout(plantContain, fieldContain, farmObj.plant,row, cols, farmObj.growthStep);
 				mainView.landLayout(fieldContain, row, cols, farmObj.soilStatus);
 			}

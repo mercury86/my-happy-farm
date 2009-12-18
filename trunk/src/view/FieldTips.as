@@ -1,6 +1,7 @@
 ﻿package view 
 {
 	import flash.display.Sprite;
+	import flash.text.TextField;
 	
 	/**
 	 * 鼠标放在农田上，显示的提示框

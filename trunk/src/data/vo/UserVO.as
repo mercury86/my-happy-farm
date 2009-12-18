@@ -160,6 +160,16 @@
 		{
 			_dog = value;
 		}
+		
+		public function set name(value:String):void 
+		{
+			_name = value;
+		}
+		
+		public function set id(value:Number):void 
+		{
+			_id = value;
+		}
 	
 		
 	}
