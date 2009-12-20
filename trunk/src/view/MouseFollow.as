@@ -26,8 +26,8 @@
 			gotoAndStop(type);
 		}
 		public function mcFollow(e:TimerEvent):void {
-				x = parent.mouseX;
-				y = parent.mouseY;
+				x = parent.mouseX+5;
+				y = parent.mouseY+5;
 			if (parent.mouseY > 50 && parent.mouseY < 550) {
 				gotoAndStop(operate);
 			}else {

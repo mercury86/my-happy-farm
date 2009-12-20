@@ -26,6 +26,7 @@
 			_row = sx;
 			_cols = sy;
 			name = "f" + sx + "_" + sy;
+			weed_mc.stop();
 		}
 		public function watering():void {
 			if (_status == 4) {
@@ -35,11 +36,32 @@
 				DebugTrace.dtrace("code info Field.as:土地不需要浇水。")
 			}
 		}
+		/**
+		 * 除草
+		 * 如果当前有草
+		 * 删除一根草
+		 * 如果当前没草
+		 * 提示不能除草
+		 */
 		public function killWeed():void {
-			
+			if (weed_mc.currentFrame != 1) {
+				weed_mc.prevFrame();
+			}else {
+				DebugTrace.dtrace("code info Field.as:没有草可以除。")
+			}
 		}
+		/**
+		 * 放草
+		 * 如果草的数量没有满三根
+		 * 放上一根，
+		 * 否则，提示不能放草
+		 */
 		public function putWeed():void {
-			
+			if (weed_mc.currentFrame != 4) {
+				weed_mc.nextFrame();
+			}else {
+				DebugTrace.dtrace("code info Field.as:草的数量已经够了。");
+			}
 		}
 		public function fertilize():void {
 			//土地正常的时候才能施肥

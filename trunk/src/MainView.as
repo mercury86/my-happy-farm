@@ -102,6 +102,7 @@
 			fieldContain = new FarmContain();
 			plantContain = new FarmContain();
 			fieldAreaContain = new FarmContain();
+			
 			mouseFollow = new MouseFollow();
 		}
 		/**

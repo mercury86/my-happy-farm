@@ -15,7 +15,7 @@
 			
 		}
 		public function showTips(obj:Object):void {
-			
+			//显示obj信息...
 		}
 		public function hideTips():void {
 		}

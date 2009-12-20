@@ -25,19 +25,24 @@
 		private function appointPlant(obj:Object):PlantInstance {
 			var row:int = obj.x;
 			var cols:int = obj.y;
+			var mainView:MainView = MainView.getInstance();
 			var plant:PlantInstance = mainView.plantArr[row][cols];
 			return plant;
 		}
-		public function dealKillWorm(mainView:MainView,obj:Object):void {
+		public function dealKillWorm(obj:Object):void {
 			DebugTrace.dtrace("code info DealPlant.as:处理杀虫。");
-			var plant:PlantInstance = appointPlant(obj);	
+			var plant:PlantInstance = appointPlant(obj);
+			plant.killWorm();
 		}
-		public function dealPutWorm(mainView:MainView,obj:Object):void {
+		public function dealPutWorm(obj:Object):void {
 			DebugTrace.dtrace("code info DealPlant.as:处理放虫。");
+			var plant:PlantInstance = appointPlant(obj);
+			plant.putWorm();
 		}
-		public function dealReap(mainView:MainView, obj:Object):void {
+		public function dealReap(obj:Object):void {
 			DebugTrace.dtrace("code info DealPlant.as:处理收割。");
-			
+			var plant:PlantInstance = appointPlant(obj);
+			plant.reap();			
 		}
 	}
 	

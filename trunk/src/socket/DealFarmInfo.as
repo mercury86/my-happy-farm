@@ -30,9 +30,10 @@
 		 * @param	mainView
 		 * @param	obj
 		 */
-		public function layoutFarm(mainView:MainView, obj:Object):void {
+		public function layoutFarm(obj:Object):void {
 			var farmArr:Array = obj.farmlands;
 			var num:int = farmArr.length;
+			var mainView:MainView = MainView.getInstance();
 			var plantContain:Sprite = mainView.plantContain;
 			var fieldContain:Sprite = mainView.fieldContain;
 			for (var i:int = 0; i < num; i++ ) {

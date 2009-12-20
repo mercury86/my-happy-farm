@@ -26,6 +26,7 @@
 		private function appointField(obj:Object):Field {
 			var row:int = obj.x;
 			var cols:int = obj.y;
+			var mainView:MainView = MainView.getInstance();
 			var field:Field = mainView.fieldArr[row][cols];
 			return field;
 		}
@@ -34,22 +35,37 @@
 		 * @param	mainView
 		 * @param	obj
 		 */
-		public function dealWatering(mainView:MainView, obj:Object):void {
+		public function dealWatering(obj:Object):void {
 			DebugTrace.dtrace("code info DealField.as:处理浇水。");
 			var field:Field = appointField(obj);
 			field.status = 2;
 		}
-		public function dealFertilize(mainView:MainView, obj:Object):void {
+		/**
+		 * 30002
+		 * @param	obj
+		 */
+		public function dealFertilize(obj:Object):void {
 			DebugTrace.dtrace("code info DealField.as:处理施肥。");
 			var field:Field = appointField(obj);
 			field.status = 3;
 		}
-		public function dealKillWeed(mainView:MainView, obj:Object):void {
+		/**
+		 * 30003
+		 * @param	obj
+		 */
+		public function dealKillWeed(obj:Object):void {
 			DebugTrace.dtrace("code info DealField.as:处理除草。");
+			var field:Field = appointField(obj);
+			field.killWeed();
 		}
-		public function dealPutWeed(mainView:MainView, obj:Object):void {
+		/**
+		 * 30006
+		 * @param	obj
+		 */
+		public function dealPutWeed(obj:Object):void {
 			DebugTrace.dtrace("code info DealField.as:处理放草。");
-			
+			var field:Field = appointField(obj);
+			field.putWeed();
 		}
 		/**
 		 * 播种

@@ -13,7 +13,6 @@
 	public class ServerInfoDeal 
 	{
 		
-		private static var mainView:MainView
 		private static var mySend:LocalConnection;
 		private static var myRec:LocalConnection;
 		public function ServerInfoDeal() 
@@ -43,60 +42,59 @@
 			DebugTrace.dtrace("code info ServerInfoDeal.as:收到信息：" + str)
 			var obj:Object = JSON.decode(str);
 			if (obj.status == 1) {
-				mainView = MainView.getInstance();
-				dealInfo(mainView, obj.data);
+				dealInfo(obj);
 			}else {
 				//显示错误提示
 				DebugTrace.dtrace("code info ServerInfoDeal.as:操作失败---" + obj.error);
 				return;
-			}
-			
+			}		
 		}
-		public static function dealInfo(mainView:MainView, obj:Object):void {
-			DebugTrace.dtrace("code info SeverInfoDeal.as:收到信息编号为-----------" + obj.resType);
-			switch(obj.resType) {
+		public static function dealInfo(allInfo:Object):void {
+			var obj:Object = allInfo.data;
+			DebugTrace.dtrace("code info SeverInfoDeal.as:收到信息编号为-----------" + allInfo.resType);
+			switch(allInfo.resType) {
 				case 10001://登陆信息
 					var dealLoginInfo:DealLoginInfo=DealLoginInfo.getInstance();
 					dealLoginInfo.dealLogin(obj);
 					break;
 				case 10002://用户信息
 					var dealUserInfo:DealUserInfo = DealUserInfo.getInstance();
-					dealUserInfo.dealUserInfo(mainView, obj);
+					dealUserInfo.dealUserInfo(obj);
 					break;
 				case 10003://农田信息
 					var dealFarmInfo:DealFarmInfo = DealFarmInfo.getInstance();
-					dealFarmInfo.layoutFarm(mainView,obj);
+					dealFarmInfo.layoutFarm(obj);
 					break;
 				case 10006://刷新好友列表
 					
 					break;
 				case 30001://浇水
 					var dealWatering:DealField = DealField.getInstance();
-					dealWatering.dealWatering(mainView,obj);
+					dealWatering.dealWatering(obj);
 					break;
 				case 30002://施肥
 					var dealFertilize:DealField = DealField.getInstance();
-					dealFertilize.dealFertilize(mainView,obj);
+					dealFertilize.dealFertilize(obj);
 					break;
 				case 30003://除草
 					var dealWeed:DealField = DealField.getInstance();
-					dealWeed.dealKillWeed(mainView,obj);
+					dealWeed.dealKillWeed(obj);
 					break;
 				case 30004://杀虫
 					var dealKillWorm:DealPlant = DealPlant.getInstance();
-					dealKillWorm.dealKillWorm(mainView, obj);
+					dealKillWorm.dealKillWorm(obj);
 					break;
 				case 30005://放虫
 					var dealPutWorm:DealPlant = DealPlant.getInstance();
-					dealPutWorm.dealPutWorm(mainView, obj);
+					dealPutWorm.dealPutWorm(obj);
 					break;
 				case 30006://放草
 					var putWeed:DealField = DealField.getInstance();
-					putWeed.dealPutWeed(mainView,obj);
+					putWeed.dealPutWeed(obj);
 					break;
 				case 30007://收获
 					var reap:DealPlant = DealPlant.getInstance();
-					reap.dealReap(mainView,obj);
+					reap.dealReap(obj);
 					break;
 				case 30008://一键摘取
 				
