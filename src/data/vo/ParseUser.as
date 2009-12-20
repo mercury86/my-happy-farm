@@ -7,10 +7,6 @@
 	public class ParseUser
 	{
 		
-		public function ParseUser() 
-		{
-		}
-		
 		private static var _instance:ParseUser; 
   
         public function ParseUser(enforcer:SingletonEnforcer) 

@@ -1,8 +1,10 @@
 ﻿package socket 
 {
 	import com.utils.DebugTrace;
+	import data.vo.ParseUser;
 	import data.vo.UserVO;
 	import flash.display.MovieClip;
+	import view.TopBar;
 	
 	/**
 	 * 处理用户信息
@@ -17,7 +19,7 @@
 		/**
 		 * 上工具栏
 		 */
-		private var topBar:MovieClip;
+		private var topBar:TopBar;
 		private static var instance:DealUserInfo
 		public function DealUserInfo(singleton:SingletonUser) 
 		{
@@ -31,20 +33,13 @@
 			}
 			return instance;
 		}
-		public function dealUserInfo(mainView:MainView, obj:Object):void {
+		public function dealUserInfo(obj:Object):void {
 			DebugTrace.dtrace("code info DealUserInfo.as:处理用户信息。")
-			topBar = mainView.topBar as MovieClip;
-			//设置myInfo属性
-			//userName = obj.name;
-			//topBar.level.text=userLevel = obj.level;
-			//userImg = obj.img;
-			//userExp = obj.experience;
-			//userNextExp = obj.next_experience;
-			//userCash = obj.cash;
-			//userKool = obj.kool;
-			//userCredit = obj.credit;
-			//userBackGround = obj.backGround;
-			//userDog = obj.dog;
+			var mainView:MainView = MainView.getInstance();
+			//var parseUser:ParseUser = ParseUser.getInstance();
+			//var userVo:UserVO = parseUser.parseUserDtoToVo(obj);
+			topBar = mainView.topBar as TopBar;
+			//topBar.userInfo = userVo;
 		}
 		
 	}

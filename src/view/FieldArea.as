@@ -57,7 +57,7 @@
 				case "putWorm":
 					putWorm();
 					break;
-				case "KillWeed":
+				case "killWeed":
 					killWeed();
 					break;
 				case "putWeed":
