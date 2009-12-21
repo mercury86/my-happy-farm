@@ -78,17 +78,16 @@
 			
 			var requestToserver:RequestToServer = RequestToServer.getInstance();
 			//农场主信息请求
-			requestToserver.req_userInfo();
+			requestToserver.req_userInfo(DataConst.USERID);
 			//农田信息请求
 			requestToserver.req_farmInfo(DataConst.USERID);
 			//请求好友列表
-			requestToserver.req_friendList();	
+			requestToserver.req_friendList(DataConst.USERID);	
 			
 			initData();
 		}
 		private function initData():void {
 			mainData.login = true;
-			mainData.farmID =DataConst.USERID;
 			mainData.operate = "select";
 			mainData.bgUrl = "bg.jpg";
 		}

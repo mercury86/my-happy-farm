@@ -24,6 +24,7 @@
 		public function WarehouseDialog() 
 		{
 			this.dialogMcName = "testDialog";
+			this.showCloseBtn = true;
 		}
 		
 		override protected function main():void 
@@ -32,7 +33,7 @@
 			
 			var array:Array = new Array();
 		
-			for (var i:int = 0; i < 17; i++ )
+			for (var i:int = 0; i < 50; i++ )
 			{
 				var gridDataDispVO:GridDataDispVO = new GridDataDispVO();
 				
@@ -44,7 +45,6 @@
 				gridDataDispVO.item = warehouseVO;
 				
 				var tempVO:WarehouseVO = gridDataDispVO.item as WarehouseVO;
-				
 				gridDataDispVO.item_bg_mc.num_txt.text = tempVO.count;
 				array.push(gridDataDispVO);
 			}
@@ -54,7 +54,7 @@
 		
 		private function createChild(array:Array):void
 		{
-			grid = new Grid(this.dialogMc.width,this.dialogMc.height);
+			grid = new Grid(this.dialogMc.width,this.dialogMc.height-80);
 			grid.x = 80;
 			grid.y = 40;
 			grid.dataProvider = array;
@@ -66,25 +66,42 @@
 		{
 			super.addEventFun();
 			
-			grid.addEventListener(MouseEvent.CLICK,doItemClick);
+			grid.addEventListener(MouseEvent.CLICK, doItemClick);
+			this.dialogMc.current_btn.addEventListener(MouseEvent.CLICK,doCurrent);
+			this.dialogMc.history_btn.addEventListener(MouseEvent.CLICK,doHistory);
+		}
+		
+		private function showGrid(array:Array):void 
+		{
+			grid.dataProvider = array;
+			grid.validateNow();
+		}
+		
+		private function doCurrent(e:MouseEvent):void 
+		{
+			showGrid(new Array());
+		}
+		
+		private function doHistory(e:MouseEvent):void 
+		{
+			showGrid(new Array());
 		}
 	
 		private function doItemClick(event:Event):void
 		{
 			var item:WarehouseItem = new WarehouseItem();
-			trace(event.target)
 			var gridItem:GridItem = event.target as GridItem;
-			if(gridItem is GridItem)
-			{
-				item.warehouseVO = gridItem.gridDataDispVO.item as WarehouseVO;
-				this.addChild(item);
-			}
+			if (gridItem == null) return;
+			
+			item.warehouseVO = gridItem.gridDataDispVO.item as WarehouseVO;
+			this.addChild(item);
+			
 		}
 		
 		override protected function removEvent():void
 		{
-			super.addEventFun();
-			grid.removeEventListener(Grid.ITEM_CLICK,doItemClick);
+			super.removEvent();
+			grid.removeEventListener(MouseEvent.CLICK,doItemClick);
 		}
 		
 		override protected function dispose():void

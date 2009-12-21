@@ -72,14 +72,11 @@
 			this.removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			onInitAsset();
-			
 			_filterList.push(_filter);
 			
 			//弹出窗体后是否和别的可交互对象可进行交互
 			if(isModal)
 				onForbidden();
-			
-				
 			_container.alpha = 0;
 			_container.scaleX = _container.scaleY = 0;
 			
@@ -87,10 +84,11 @@
 	
 			TweenLite.to(_container, .9, {scaleX:1, scaleY:1,alpha:1, ease:Back.easeOut});
 			
-			//添加监听事件
-			this.addEventFun();
 			//主程序入口
 			this.main();
+			
+			//添加监听事件
+			this.addEventFun();
 		}
 		
 		private function onInitAsset():void
@@ -102,17 +100,12 @@
 			}
 			
 			dialogMc = GetMovieClip.getMovieClip(dialogMcName);
-			
-			//弹窗在舞台中间弹出
-			dialogMc.x = dialogMc.width / 2;
-			dialogMc.y = dialogMc.height / 2;
-			
 			if (_container == null)
 				_container = new Sprite();
 			_container.addChild(dialogMc);
 			
-			dialogMc.x = stage.stageWidth/2
-			dialogMc.y = stage.stageHeight/2;
+			_container.x = stage.stageWidth / 2 - _container.width / 2;
+			_container.y = stage.stageHeight/2 - _container.height / 2;
 		}
 		
 		

@@ -49,9 +49,17 @@
 				return;
 			}		
 		}
+		/**
+		 * 
+		 * @param	allInfo对象有四个键，分别是resType,status,error,data
+		 */
 		public static function dealInfo(allInfo:Object):void {
-			var obj:Object = allInfo.data;
 			DebugTrace.dtrace("code info SeverInfoDeal.as:收到信息编号为-----------" + allInfo.resType);
+			var obj:Object = allInfo.data;	
+			if (allInfo.status != 1) {
+				DebugTrace.dtrace("code info ServerInfoDeal.as:异常----" + allInfo.error);
+				return;
+			}	
 			switch(allInfo.resType) {
 				case 10001://登陆信息
 					var dealLoginInfo:DealLoginInfo=DealLoginInfo.getInstance();
@@ -68,6 +76,7 @@
 				case 10006://刷新好友列表
 					
 					break;
+				//操作----------------------------------------------------
 				case 30001://浇水
 					var dealWatering:DealField = DealField.getInstance();
 					dealWatering.dealWatering(obj);
@@ -100,7 +109,8 @@
 				
 					break;
 				case 30009://扩建
-				
+					var dealExpand:DealField = DealField.getInstance();
+					dealExpand.dealExpand(obj);
 					break;
 				//case 30010:
 				//
@@ -110,6 +120,27 @@
 					//break;
 				case 30012://播种
 				
+					break;
+				case 30014://挖掉
+					var dealHoeing:DealField = DealField.getInstance();
+					dealHoeing.dealHoeing(obj);
+				   break;
+				   
+				case 40001://改变土地状态
+					var fieldStatus:DealField = DealField.getInstance();
+					fieldStatus.fieldStatus(obj);
+					break;
+				case 40002://虫的状态
+					var wormStatus:DealPlant = DealPlant.getInstance();
+					wormStatus.wormStatus(obj);
+					break;
+				case 40003://草的状态
+					var weedStatus:DealField = DealField.getInstance();
+					weedStatus.weedStatus(obj);
+					break;
+				case 40004:
+					var cropStatus:DealPlant = DealPlant.getInstance();
+					cropStatus.cropStatus(obj);
 					break;
 				default:
 					DebugTrace.dtrace("code error ServerInfoDeal.as:没有的类型.")

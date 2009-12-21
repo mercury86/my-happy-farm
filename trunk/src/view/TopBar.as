@@ -4,7 +4,7 @@
 	import flash.display.MovieClip;
 	import flash.text.TextField;
 	/**
-	 * ...
+	 * 个人信息
 	 * @author zhengzihua
 	 */
 	public class TopBar extends MovieClip

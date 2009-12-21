@@ -18,7 +18,7 @@
 		private var reuse_num:int;
 
 		//购买单价
-		private var buy_price:int;
+		private var buy_price:int=4;
 		//售出单价
 		private var sell_price:int;
 		//需要等级
@@ -45,7 +45,7 @@
 
 		public function ProductsData() {
 		}
-		public function get ids():String {
+		public function get ids():Number {
 			return id;
 		}
 		public function get names():String {

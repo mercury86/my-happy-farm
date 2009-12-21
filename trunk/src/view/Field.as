@@ -20,6 +20,7 @@
 		 * 第四帧是干涸
 		 */
 		private var _status:int;
+		private var requestToServer:RequestToServer;
 		public function Field(sx:int,sy:int) 
 		{
 			stop();
@@ -27,11 +28,11 @@
 			_cols = sy;
 			name = "f" + sx + "_" + sy;
 			weed_mc.stop();
+			requestToServer = RequestToServer.getInstance();
 		}
 		public function watering():void {
 			if (_status == 4) {
-				var requestToServer:RequestToServer = RequestToServer.getInstance();
-				requestToServer.req_watering(DataConst.USERID, _row, _cols);
+				requestToServer.req_watering(DataConst.CURR_FARM_ID, _row, _cols);
 			}else {
 				DebugTrace.dtrace("code info Field.as:土地不需要浇水。")
 			}
@@ -45,7 +46,7 @@
 		 */
 		public function killWeed():void {
 			if (weed_mc.currentFrame != 1) {
-				weed_mc.prevFrame();
+				requestToServer.req_killWeed(DataConst.CURR_FARM_ID,_row,_cols);
 			}else {
 				DebugTrace.dtrace("code info Field.as:没有草可以除。")
 			}
@@ -58,7 +59,7 @@
 		 */
 		public function putWeed():void {
 			if (weed_mc.currentFrame != 4) {
-				weed_mc.nextFrame();
+				requestToServer.req_putWeed(DataConst.CURR_FARM_ID,_row,cols);
 			}else {
 				DebugTrace.dtrace("code info Field.as:草的数量已经够了。");
 			}
@@ -66,13 +67,29 @@
 		public function fertilize():void {
 			//土地正常的时候才能施肥
 			if (_status == 2) {
-				var requestToServer:RequestToServer = RequestToServer.getInstance();
-				requestToServer.req_feitilize(DataConst.USERID, _row, _cols);
+				requestToServer.req_feitilize(DataConst.CURR_FARM_ID, _row, _cols);
 			}else if (_status == 1) {
 				//未开垦，不提示
 			}else {
 				DebugTrace.dtrace("code info Field.as:土地不在正常状态，不能施肥。")
 			}
+		}
+		public function addWeed():void {
+			if (weed_mc.currentFrame != 4) {
+				weed_mc.nextFrame();
+			}else {
+				DebugTrace.dtrace("code info Field.as:草太多了。")
+			}
+		}
+		public function delWeed():void {
+			if (weed_mc.currentFrame != 1) {
+				weed_mc.prevFrame();
+			}else {
+				DebugTrace.dtrace("code info Field.as:草已经都除掉了。");
+			}
+		}
+		public function weedStatus(num:int):void {
+			weed_mc.gotoAndStop(num + 1);
 		}
 		public function get cols():int { return _cols; }
 		

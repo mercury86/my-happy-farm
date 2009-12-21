@@ -4,6 +4,7 @@
 	import data.EventConst;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
+	import socket.RequestToServer;
 	
 	/**
 	 * ...
@@ -36,6 +37,8 @@
 			//仓库应该是一个单例模式，
 			//获取仓库对象
 			//添加到显示列表，应该和buttomBar在同一级别
+			var toServer:RequestToServer = RequestToServer.getInstance();
+			toServer.req_storeHouse();
 		}
 		public function get operate():String { return _operate; }
 		

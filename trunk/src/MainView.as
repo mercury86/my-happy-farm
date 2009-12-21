@@ -25,6 +25,9 @@
 		public var topBar:Sprite;//个人信息以及商店等。
 		public var bottomBar:Sprite;//操作栏
 		public var friendBar:FriendBar;//好友栏
+		public var toolBar:ToolBar;
+		public var expandMc:ExpandMc;
+		
 		//土地、植物、操作区域的三个容器
 		public var fieldContain:Sprite;
 		public var plantContain:Sprite;
@@ -98,7 +101,9 @@
 			bg = new Bg();
 			topBar = new TopBar();
 			bottomBar = new BottomBar(250, 500);
-			friendBar = new FriendBar(0,550);		
+			friendBar = new FriendBar(0, 550);
+			toolBar = new ToolBar(642, 0);
+			expandMc = new ExpandMc();
 			fieldContain = new FarmContain();
 			plantContain = new FarmContain();
 			fieldAreaContain = new FarmContain();
@@ -113,19 +118,24 @@
 			mainStage.addChild(fieldContain);
 			mainStage.addChild(plantContain);
 			mainStage.addChild(fieldAreaContain);
+			mainStage.addChild(expandMc);
 			
 			targetStage.addChild(mainStage);
 			targetStage.addChild(topBar);
 			targetStage.addChild(bottomBar);
 			targetStage.addChild(friendBar);
+			targetStage.addChild(toolBar);
 			targetStage.addChild(mouseFollow);
+			
 		}
 		/**
 		 * 设置fieldAreaContain,fieldContain,plantContain三个容器的位置
 		 * @param	cx
 		 * @param	cy
 		 */
-		private function setFarmP(cx:int,cy:int):void {
+		private function setFarmP(cx:int, cy:int):void {
+			expandMc.x = cx;
+			expandMc.y = cy;
 			fieldContain.x = cx;
 			fieldContain.y = cy;
 			plantContain.x = cx;
@@ -186,6 +196,8 @@
 			plantInstance.name = "p" + row + "_" + cols;
 			plantInstance.x = c[0];
 			plantInstance.y = c[1];
+			plantInstance.plantName = "苹果树";
+			plantInstance.periodTime = 3600;
 			plantArr[row][cols] = plantInstance;//实例添加到数组中
 		}
 		public function landLayout(contain:Sprite, row:int, cols:int, status:int):void {
