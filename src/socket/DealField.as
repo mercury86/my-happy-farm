@@ -2,7 +2,10 @@
 {
 	import com.utils.DebugTrace;
 	import flash.display.Sprite;
+	import view.ExpandMc;
 	import view.Field;
+	import view.FieldArea;
+	import view.plant.PlantInstance;
 	
 	/**
 	 * ...
@@ -56,7 +59,7 @@
 		public function dealKillWeed(obj:Object):void {
 			DebugTrace.dtrace("code info DealField.as:处理除草。");
 			var field:Field = appointField(obj);
-			field.killWeed();
+			field.delWeed();
 		}
 		/**
 		 * 30006
@@ -65,15 +68,39 @@
 		public function dealPutWeed(obj:Object):void {
 			DebugTrace.dtrace("code info DealField.as:处理放草。");
 			var field:Field = appointField(obj);
-			field.putWeed();
+			field.addWeed();
 		}
 		/**
 		 * 播种
 		 * @param	mainView
 		 * @param	obj
 		 */
-		public function dealSeed(mainView:MainView, obj:Object):void {
+		public function dealSeed(obj:Object):void {
 			
+		}
+		/**
+		 * 挖掉
+		 * @param	obj
+		 */
+		public function dealHoeing(obj:Object):void {
+			var row:int = obj.x;
+			var cols:int = obj.y;
+			var mainView:MainView = MainView.getInstance();
+			var fieldArea:FieldArea = mainView.fieldAreaArr[row][cols];
+			fieldArea.delPlant();
+			mainView.plantArr[row][cols] = null;
+		}
+		public function fieldStatus(obj:Object):void {
+			var field:Field = appointField(obj);
+			field.status = obj.soilType;
+		}
+		public function weedStatus(obj:Object):void {
+			var field:Field = appointField(obj);
+			field.weedStatus(obj.num);
+		}
+		public function dealExpand(obj:Object):void {
+			var expandMc:ExpandMc = MainView.getInstance().expandMc;
+			expandMc.putMc(obj.expandMc.x, obj.expandMc.y);
 		}
 	}
 	

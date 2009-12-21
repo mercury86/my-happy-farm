@@ -35,10 +35,10 @@
 		}
 		public function dealUserInfo(obj:Object):void {
 			DebugTrace.dtrace("code info DealUserInfo.as:处理用户信息。")
-			var mainView:MainView = MainView.getInstance();
+			//var mainView:MainView = MainView.getInstance();
 			//var parseUser:ParseUser = ParseUser.getInstance();
 			//var userVo:UserVO = parseUser.parseUserDtoToVo(obj);
-			topBar = mainView.topBar as TopBar;
+			//topBar = mainView.topBar as TopBar;
 			//topBar.userInfo = userVo;
 		}
 		

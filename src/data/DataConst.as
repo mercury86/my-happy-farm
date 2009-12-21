@@ -7,7 +7,8 @@
 	 */
 	public class DataConst 
 	{
-		public static var USERID:int = 20000001;//当前所在农场的用户的ID
+		public static var USERID:int = 20000001;//登陆用户的农场id
+		public static var CURR_FARM_ID:int=0;//当前农场id
 		
 		public static const FIELD_ROW:int = 7;
 		public static const FIELD_COLS:int = 3;

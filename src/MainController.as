@@ -31,9 +31,6 @@
 		public function changeLogin(b:Boolean):void {
 			mainData.login = b;
 		}
-		public function changeIsMyFarm(b:int):void {
-			mainData.farmID = b;
-		}
 		public function changeOperate(str:String):void {
 			mainData.operate = str;
 		}

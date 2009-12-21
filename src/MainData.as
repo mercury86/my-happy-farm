@@ -12,7 +12,6 @@
 	public class MainData extends EventDispatcher
 	{
 		private var _login:Boolean;
-		private var _farmID:int;
 		private var _operate:String;
 		private var _bgUrl:String;
 		public function MainData() 
@@ -37,14 +36,6 @@
 		{
 			_login = value;
 		}
-		
-		public function get farmID():int { return _farmID; }
-		
-		public function set farmID(value:int):void 
-		{
-			_farmID = value;
-		}
-		
 		public function get bgUrl():String { return _bgUrl; }
 		
 		public function set bgUrl(value:String):void 

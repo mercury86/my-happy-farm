@@ -32,17 +32,29 @@
 		public function dealKillWorm(obj:Object):void {
 			DebugTrace.dtrace("code info DealPlant.as:处理杀虫。");
 			var plant:PlantInstance = appointPlant(obj);
-			plant.killWorm();
+			plant.delWorm();
 		}
 		public function dealPutWorm(obj:Object):void {
 			DebugTrace.dtrace("code info DealPlant.as:处理放虫。");
 			var plant:PlantInstance = appointPlant(obj);
-			plant.putWorm();
+			plant.addWorm();
 		}
 		public function dealReap(obj:Object):void {
 			DebugTrace.dtrace("code info DealPlant.as:处理收割。");
 			var plant:PlantInstance = appointPlant(obj);
-			plant.reap();			
+			plant.status = 7;
+		}
+		public function wormStatus(obj:Object):void {
+			var plant:PlantInstance = appointPlant(obj);
+			plant.wormStatus(obj.num);
+		}
+		public function cropStatus(obj:Object):void {
+			var plant:PlantInstance = appointPlant(obj);
+			if(plant!=null){
+				plant.status = obj.status;
+			}else {
+				DebugTrace.dtrace("code info DealPlant.as:指定的区域没有农作物。")
+			}
 		}
 	}
 	
