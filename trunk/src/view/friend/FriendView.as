@@ -63,11 +63,10 @@
 				_mc.sex_mc.gotoAndStop(2);
 				_mc.role_mc.gotoAndStop(2);
 			}
-				
-			var i:int = _mc.getChildIndex(_mc.head_mc);
+			*/	
+	
 			var head_photo:HeadPhoto = new HeadPhoto(_mc.head_mc);
-			_mc.addChildAt(head_photo,i);
-			head_photo.loadPhoto(_user.userPic);*/
+			head_photo.loadPhoto("1.jpg");
 		}
 		
 		public function changBg(isSelected:Boolean):void
