@@ -9,61 +9,47 @@
 	import flash.net.URLRequest;
 	
 	/**
-	 * 加载头像
+	 * 头像加载
 	 * @author mcko
 	 */
 	public class HeadPhoto extends Sprite
 	{
-		private var _photoLoader:Loader;
+		private var _imgLoader:Loader;
 		
 		//头像的背景框，通过此设置头像的大小、位置
-		private var _photoContainerMC:DisplayObjectContainer; 
-	
-		public function HeadPhoto(photo_container_mc:DisplayObjectContainer) 
+		private var _imgContainerMC:DisplayObjectContainer; 
+		
+		public function HeadPhoto(_container_mc:DisplayObjectContainer) 
 		{
-			_photoContainerMC = photo_container_mc;
+			_imgContainerMC = _container_mc;
 		}
 		
 		//加载头像
-		public function loadPhoto(_pic_url:String):void
+		public function loadPhoto(_img_url:String):void
 		{
-			if (_pic_url == null || _pic_url == "") return;
-			_photoLoader = new Loader();
-			_photoLoader.load(new URLRequest(_pic_url));
-			_photoLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onCompleteHandler);
-			_photoLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onErrorHandler);
+			if (_img_url == null || _img_url == "") return;
+			
+			_imgLoader = new Loader();
+			_imgLoader.load(new URLRequest(_img_url));
+			
+			_imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, imgCompleteHandler);
+			_imgLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,  imgErrorHandler);
 		}
 		
-		//头像下载完成后设置位置
-		protected function onCompleteHandler(e:Event):void 
+		protected function imgCompleteHandler(e:Event):void 
 		{
-			_photoLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onCompleteHandler);
-			_photoLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onErrorHandler);
-			
-			var _mainContainer:Sprite = new Sprite();
-			_mainContainer.addChild(_photoLoader);
-			
-			_photoLoader.x = _photoContainerMC.x + _photoContainerMC.width / 2;
-			_photoLoader.y = _photoContainerMC.y + _photoContainerMC.height / 2;
-			_photoLoader.x -= _photoLoader.width / 2;
-			_photoLoader.y -= _photoLoader.height / 2;
-			
-			//为头像设置遮罩
-			var maskSp:Sprite = new Sprite();
-			maskSp.graphics.beginFill(0xFFFFFF);
-			maskSp.graphics.drawRoundRect(_photoContainerMC.x + .5, _photoContainerMC.y + .5, 
-									_photoContainerMC.width - 1.8, _photoContainerMC.height - 1.8,
-									10, 10);
-			_mainContainer.addChild(maskSp);
-			_photoLoader.mask = maskSp;
-			addChild(_mainContainer);
+			_imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imgCompleteHandler);
+			_imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imgErrorHandler);
+			_imgLoader.height =  _imgContainerMC.height;
+			_imgLoader.width = _imgContainerMC.width;
+			_imgContainerMC.addChild(_imgLoader);
 		}
 		
 		//头像下载失败
-		protected function onErrorHandler(e:IOErrorEvent):void 
+		protected function imgErrorHandler(e:IOErrorEvent):void 
 		{
-			_photoLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onCompleteHandler);
-			_photoLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onErrorHandler);
+			_imgLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imgCompleteHandler);
+			_imgLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imgErrorHandler);
 		}
 		
 	}
