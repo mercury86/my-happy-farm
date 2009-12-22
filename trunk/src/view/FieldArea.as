@@ -30,6 +30,7 @@
 		{
 			tips = new FieldTips();
 			tips.name = "tips";
+			tips.mouseEnabled = false;
 			_row = sx;
 			_cols = sy;
 			name = "fa" + sx + "_" + sy;

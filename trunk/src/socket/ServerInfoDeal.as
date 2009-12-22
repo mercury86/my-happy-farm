@@ -111,7 +111,7 @@
 				case 30009://扩建
 					var dealExpand:DealField = DealField.getInstance();
 					dealExpand.dealExpand(obj);
-					break;
+					break;    
 				//case 30010:
 				//
 					//break;

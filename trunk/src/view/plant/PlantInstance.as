@@ -16,6 +16,7 @@
 		private var displayMc:MovieClip;//显示的mc
 		private var wilt_mc:Wilt;
 		private var worm_mc:Worm;
+		private var _plantId:int;
 		private var _row:int;
 		private var _cols:int;
 		private var _status:int;//当前状态
@@ -32,6 +33,8 @@
 			this.displayMc = mc;
 			worm_mc = new Worm();
 			wilt_mc = new Wilt();
+			mouseChildren = false;
+			mouseEnabled = false;
 			addChild(mc);
 			addChild(worm_mc);
 			requestToServer = RequestToServer.getInstance();
@@ -153,6 +156,13 @@
 		public function set plantName(value:String):void 
 		{
 			_plantName = value;
+		}
+		
+		public function get plantId():int { return _plantId; }
+		
+		public function set plantId(value:int):void 
+		{
+			_plantId = value;
 		}
 		
 	}

@@ -38,7 +38,7 @@
 			//获取仓库对象
 			//添加到显示列表，应该和buttomBar在同一级别
 			var toServer:RequestToServer = RequestToServer.getInstance();
-			toServer.req_storeHouse();
+			toServer.req_pocket();
 		}
 		public function get operate():String { return _operate; }
 		

@@ -20,6 +20,8 @@
 		private var _level:int;
 		//经验值
 		private var _experience:int;
+		//升级经验
+		private var _nextExperience:int
 		
 		//金币
 		private var _cash:int;
@@ -170,8 +172,43 @@
 		{
 			_id = value;
 		}
-	
 		
+		public function set uid(value:Number):void 
+		{
+			_uid = value;
+		}
+		
+		public function set headUrl(value:String):void 
+		{
+			_headUrl = value;
+		}
+		
+		public function set gender(value:int):void 
+		{
+			_gender = value;
+		}
+		
+		public function set lastIp(value:String):void 
+		{
+			_lastIp = value;
+		}
+		
+		public function set email(value:String):void 
+		{
+			_email = value;
+		}
+		
+		public function set tinyUrl(value:String):void 
+		{
+			_tinyUrl = value;
+		}
+		
+		public function get nextExperience():int { return _nextExperience; }
+		
+		public function set nextExperience(value:int):void 
+		{
+			_nextExperience = value;
+		}
 	}
 
 }

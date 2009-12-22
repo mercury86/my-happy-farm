@@ -34,6 +34,14 @@
 				gotoAndStop("select");
 			}
 		}
+		public function iconHide():void {
+			Mouse.show();
+			visible = false;
+		}
+		public function iconShow():void {
+			Mouse.hide();
+			visible = true;
+		}
 
 	}
 	

@@ -1,5 +1,8 @@
 ﻿package utils.grid 
 {
+	import com.greensock.easing.Back;
+	import com.greensock.easing.Elastic;
+	import com.greensock.TweenLite;
 	import data.vo.GridDataDispVO;
 	import flash.geom.Rectangle;
 	
@@ -55,6 +58,9 @@
 				var tempVO:GridDataDispVO = dataProvider[i] as GridDataDispVO;
 				var itemView:GridItem = new GridItem(tempVO);
 				
+				itemView.addEventListener(MouseEvent.MOUSE_OVER, itemDeactive);
+				itemView.addEventListener(MouseEvent.MOUSE_OUT, itemActive);
+				
 				//记住单列的高度
 				if (_rowHight == 0)
 					_rowHight = tempVO.item_bg_mc.height + this._rowHight;
@@ -78,6 +84,16 @@
 	
 			}
 		}
+		
+		private function itemActive(_evt:MouseEvent)
+		{
+			TweenLite.to(_evt.target, 0.5, { alpha:1} );
+		}
+		private function itemDeactive(_evt:MouseEvent)
+		{
+			TweenLite.to(_evt.target, 0.5, { alpha:0.8} );
+		}
+		
 		
 		private function createVerticalScrollBar():Boolean
 		{
@@ -153,7 +169,8 @@
 		
 		private function verticalScroll(position:Number):void
 		{
-			this._container.y = ((this._showHeigh - this._container.height) * position);
+			var y:int = (this._showHeigh - this._container.height) * position;
+			TweenLite.to(_container, 0.8, { y:y , ease:Back.easeOut } );
 		}
 		
 		private function setMask():void

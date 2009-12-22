@@ -3,6 +3,7 @@
 	import com.utils.DebugTrace;
 	import flash.display.Sprite;
 	import view.Field;
+	import view.plant.PlantInstance;
 	
 	/**
 	 * ...
@@ -36,12 +37,18 @@
 			var mainView:MainView = MainView.getInstance();
 			var plantContain:Sprite = mainView.plantContain;
 			var fieldContain:Sprite = mainView.fieldContain;
+			var expandX:int = obj.expandMc.x;
+			var expandY:int = obj.expandMc.y;
+			mainView.farmInit();//田地信息初始化
+			mainView.expandMc.putMc(expandX, expandY);
 			for (var i:int = 0; i < num; i++ ) {
 				var farmObj:Object = farmArr[i];
 				var row:int = farmObj.x;
 				var cols:int = farmObj.y;
 				var field:Field = mainView.fieldArr[row][cols];
-				mainView.plantLayout(plantContain, fieldContain, farmObj.plant,row, cols, farmObj.growthStep);
+				var plant:PlantInstance = mainView.plantLayout(plantContain, farmObj.plantId, row, cols, farmObj.growthStep);
+				plant.plantName = "苹果树";
+				plant.periodTime = 3600;
 				mainView.landLayout(fieldContain, row, cols, farmObj.soilStatus);
 			}
 			
