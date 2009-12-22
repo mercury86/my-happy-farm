@@ -1,5 +1,6 @@
 ﻿package view.friend
 {
+	import utils.StringUtil;
 	import data.vo.UserVO;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
@@ -39,7 +40,7 @@
 			this._filterFriendlist = friendlist;
 			
 			if (this._friendlist !=null && this._friendlist.length >0)
-				this._friendlist.sortOn("level", Array.NUMERIC | Array.DESCENDING);//根据经验对玩家列表排序
+				this._friendlist.sortOn("level", "experience",Array.NUMERIC | Array.DESCENDING);//根据经验对玩家列表排序
 			if (stage)
 				init();
 			else
@@ -103,8 +104,7 @@
 		}
 		
 		private function doRefresh():void
-		{
-			
+		{	
 		}
 		
 		private function friendListDataLoaded(evt:Event):void 
@@ -157,8 +157,8 @@
 			_mc.groupDwon_btn.addEventListener(MouseEvent.CLICK, clickHandler);
 			_mc.frist_btn.addEventListener(MouseEvent.CLICK, clickHandler);
 			_mc.last_btn.addEventListener(MouseEvent.CLICK, clickHandler);
-			//_mc.refresh_btn.addEventListener(MouseEvent.CLICK, clickHandler);
-			//_mc.search_mc.user_search_btn.addEventListener(MouseEvent.CLICK, clickHandler);
+			_mc.refresh_btn.addEventListener(MouseEvent.CLICK, clickHandler);
+			_mc.search_mc.user_search_btn.addEventListener(MouseEvent.CLICK, clickHandler);
 		}
 		
 		private function clickHandler(e:MouseEvent):void 
@@ -186,30 +186,31 @@
 				case "refresh_btn":
 					doRefresh();
 					break;
-				/*case "user_search_btn":
+				case "user_search_btn":
 					doSearch();
-					break;*/
-				
+					break;
 			}
 		}
 		
 		//用户过滤
 		private function  doSearch(event:Event = null):void
 		{
-			/*if (StringUtil.trim(_mc.search_mc.user_searchText.text) == null || StringUtil.trim(_mc.search_mc.user_searchText.text) == "") 
+			if (_mc.search_mc.user_search_txt.text == null || StringUtil.trim(_mc.search_mc.user_search_txt.text) == "") 
 				_filterFriendlist = this._friendlist;
 			else
 				_filterFriendlist = this._friendlist.filter(filterFriendList);
 			this.moveCommonFriendList();
+			
 			var index:int = UserAssistant.findUserPositionFromListById(this._currentSelectedUser,this._filterFriendlist);
-			this.displayFriendList(_filterFriendlist,index);*/
+			this.displayFriendList(_filterFriendlist,index);
 		}
 		
 		private function filterFriendList(item:*, index:int, array:Array):Boolean
 		{
-			/*if (item.userName.indexOf(_mc.search_mc.user_searchText.text) >= 0) 
+			if (item.name == null) return false;
+			if (item.name.indexOf(_mc.search_mc.user_search_txt.text) >= 0) 
 				return true;
-			else*/
+			else
 				return  false;
 			
 		}
@@ -226,7 +227,6 @@
 			}
 		}
 		
-
 		private function doEndPageFriend():void
 		{
 			if (this._commonFriendFirstIndex + PAGESIZE > this._filterFriendlist.length - 1) return;
@@ -268,8 +268,13 @@
 				var tmp:FriendView = new FriendView(this._filterFriendlist[i],i);
 				this._commonFriendListContainer.addChild(tmp);
 				tmp.addEventListener(MouseEvent.CLICK, onfriendClickhandler);
+				
+				if(count == 0)
+					tmp.x = 52;
+				else
+					tmp.x = count * 85 + 52;
 				count ++;
-				tmp.x = count * 87;
+				
 				tmp.buttonMode = true;
 				tmp.mouseChildren = false;
 				

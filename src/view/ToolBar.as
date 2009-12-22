@@ -3,6 +3,8 @@
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import socket.RequestToServer;
+	import view.shop.ShopChildPanel;
+	import view.shop.ShopPanel;
 	
 	/**
 	 * 显示商店，我的农场，按钮
@@ -36,7 +38,10 @@
 		
 		private function onShopClick(e:MouseEvent):void 
 		{
-			toServer.req_shop();
+			var mainView:MainView = MainView.getInstance();
+			var shop:ShopPanel = new ShopPanel();
+			mainView.shopContain.addChild(shop);
+			//toServer.req_shop();
 		}
 		
 	}

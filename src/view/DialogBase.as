@@ -89,6 +89,7 @@
 			
 			//添加监听事件
 			this.addEventFun();
+		
 		}
 		
 		private function onInitAsset():void

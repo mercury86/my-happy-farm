@@ -27,6 +27,8 @@
 			_row = sx;
 			_cols = sy;
 			name = "f" + sx + "_" + sy;
+			mouseChildren = false;
+			mouseEnabled = false;
 			weed_mc.stop();
 			requestToServer = RequestToServer.getInstance();
 		}

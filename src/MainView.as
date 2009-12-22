@@ -27,6 +27,7 @@
 		public var friendBar:FriendBar;//好友栏
 		public var toolBar:ToolBar;
 		public var expandMc:ExpandMc;
+		public var shopContain:Sprite;
 		
 		//土地、植物、操作区域的三个容器
 		public var fieldContain:Sprite;
@@ -44,7 +45,7 @@
 		public var mainControl:MainController;
 		public var mainData:MainData;
 		
-		private var targetStage:Stage;
+		public var targetStage:Stage;
 		private static var instance:MainView;//实例
 		
 		public function MainView(sigleton:SingletonMainView) 
@@ -66,7 +67,7 @@
 			iniArr()
 			layout();
 			
-			test();
+			//test();
 		}
 		private function iniArr():void {
 			for (var i:int; i < DataConst.FIELD_ROW; i++ ) {
@@ -77,9 +78,9 @@
 		}
 		public function test():void {
 			//test--------
-			plantLayout(plantContain, fieldAreaContain,1, 0, 1, 4);//植物的状态
-			plantLayout(plantContain, fieldAreaContain,0, 1, 2, 2);//植物的状态
-			plantLayout(plantContain, fieldAreaContain,2, 1, 0, 3);//植物的状态
+			plantLayout(plantContain,1, 0, 1, 4);//植物的状态
+			plantLayout(plantContain,0, 1, 2, 2);//植物的状态
+			plantLayout(plantContain,2, 1, 0, 3);//植物的状态
 			landLayout(fieldContain, 0, 1, 3);//土地的状态
 			landLayout(fieldContain, 1, 2, 3);//土地的状态
 			landLayout(fieldContain, 1, 0, 3);//土地的状态
@@ -104,11 +105,13 @@
 			friendBar = new FriendBar(0, 550);
 			toolBar = new ToolBar(642, 0);
 			expandMc = new ExpandMc();
+			shopContain = new Sprite();
 			fieldContain = new FarmContain();
 			plantContain = new FarmContain();
 			fieldAreaContain = new FarmContain();
 			
 			mouseFollow = new MouseFollow();
+			mouseFollow.cacheAsBitmap = true;
 		}
 		/**
 		 * view中元件的放置
@@ -121,6 +124,7 @@
 			mainStage.addChild(expandMc);
 			
 			targetStage.addChild(mainStage);
+			targetStage.addChild(shopContain);
 			targetStage.addChild(topBar);
 			targetStage.addChild(bottomBar);
 			targetStage.addChild(friendBar);
@@ -184,10 +188,10 @@
 		 * @param	cols	放置的位置
 		 * @param	status	状态
 		 */
-		public function plantLayout(contain:Sprite,areaContain:Sprite, num:int, row:int, cols:int, status:int):void {
+		public function plantLayout(contain:Sprite, num:int, row:int, cols:int, status:int):PlantInstance {
 			var mcClass:Class = NumWithClass.numWithClass(num);
 			var plantMc:*= new mcClass();
-			var fieldArea:FieldArea = areaContain.getChildByName("fa" + row + "_" + cols) as FieldArea;
+			var fieldArea:FieldArea = fieldAreaArr[row][cols];
 			var c:Array = CoordinateTransform.coorTransform(row, cols);
 			var plantInstance:PlantInstance = new PlantInstance(plantMc);
 			plantInstance.status = status;
@@ -196,13 +200,26 @@
 			plantInstance.name = "p" + row + "_" + cols;
 			plantInstance.x = c[0];
 			plantInstance.y = c[1];
-			plantInstance.plantName = "苹果树";
-			plantInstance.periodTime = 3600;
+			plantInstance.plantId = num;
 			plantArr[row][cols] = plantInstance;//实例添加到数组中
+			
+			return plantInstance;
 		}
 		public function landLayout(contain:Sprite, row:int, cols:int, status:int):void {
 			var field:Field = contain.getChildByName("f" + row + "_" + cols) as Field;
 			field.status = status;
+		}
+		public function farmInit():void {
+			for (var i:int; i < DataConst.FIELD_ROW; i++) {
+				for (var j:int; j < DataConst.FIELD_COLS; j++) {
+					var crop:PlantInstance = plantArr[i][j];
+					fieldArr[i][j].status = 1;
+					if (crop != null) {
+						plantContain.removeChild(crop);
+						crop = null;
+					}
+				}
+			}
 		}
 	}
 
